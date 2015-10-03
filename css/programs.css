@@ -123,6 +123,7 @@
 
 #sidebar_search_program_container
 {
+background: rgba(227,229,237,0.3);
   /* display: flex; done by js */
   -webkit-flex: auto;
   flex: auto;
@@ -142,12 +143,12 @@
   flex: 1 1 0px;
 }
 
-#sidebar_search_program_container
+#sidebar_search_program_container, #sidebar_search_media_container, #sidebar_search_playlist_container 
 {
   clear: both;
   z-index: 2;
   position: relative;
-  top: -14px;
+  top: -39px;
   padding: 10px;
   border-radius: 0px 5px 5px 5px;
   -moz-border-radius: 0px 5px 5px 5px;
@@ -166,10 +167,9 @@
   text-decoration: none;
 }
 
-
-#sidebar_search_tab_programs
+#sidebar_search_tab_programs, #sidebar_search_tab_media,#sidebar_search_tab_playlist
 {
-  width: 150px;
+  width: 120px;
   border-radius: 5px 5px 0px 0px;
   -moz-border-radius: 5px 5px 0px 0px;
   height: 25px;
@@ -177,12 +177,29 @@
   text-align: center;
   cursor: pointer;
 }
-
+#sidebar_search_program_input
+{
+  background-color: rgba(0,0,0,0.3);
+}
+#sidebar_search_tab_media
+{
+  position: relative;
+  top: 11px;
+  left: 0px;
+  /* z-index: 2; */
+}
+#sidebar_search_tab_playlist
+{
+  position: relative;
+  top: -14px;
+  left: 115px;
+  /* z-index: 2; */
+}
 #sidebar_search_tab_programs
 {
   position: relative;
   top: -39px;
-  left: 290px;
+  left: 230px;
   /* z-index: 2; */
 }
 .sidebar_search_program_selected
@@ -191,9 +208,9 @@
   color: #000;
 }
 
-.sidebar_search_tab
+.sidebar_search_tabs
 {
-  border-left: 2px solid #aaa
+ border-left: 2px solid #aaa
 }
 
 .sidebar_search_tab.selected

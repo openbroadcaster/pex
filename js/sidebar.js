@@ -65,8 +65,8 @@ OB.Sidebar.programSearchFilter = function(what)
   // toggle on off
   if(what=='my') OB.Sidebar.program_search_filters.my = !OB.Sidebar.program_search_filters.my;
 
-  if(OB.Sidebar.program_search_filters.my==true) $('#sidebar_search_program_my').text(OB.t('Sidebar','My Filter Link').toUpperCase());
-  else $('#sidebar_search_program_my').text(OB.t('Sidebar','My Filter Link').toLowerCase());
+  if(OB.Sidebar.program_search_filters.my==true) $('#sidebar_search_program_my').text(OB.t('Program Sidebar','My Filter Link').toUpperCase());
+  else $('#sidebar_search_program_my').text(OB.t('Program Sidebar','My Filter Link').toLowerCase());
 
   // reload search
   OB.Sidebar.programSearch();
