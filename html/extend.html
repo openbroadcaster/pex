@@ -1,0 +1,106 @@
+<!--/*
+    Copyright 2015 OpenBroadcaster, Inc.
+
+    This file is part of OpenBroadcaster Server.
+
+    OpenBroadcaster Server is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    OpenBroadcaster Server is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with OpenBroadcaster Server.  If not, see <http://www.gnu.org/licenses/></a>.
+*/-->
+<div data-tns="Extended Media">
+<fieldset class="extended_form_legend">
+<legend>
+  <span class="extended_form_title" data-t>Production Metadata</span> 
+</legend>
+<div class="extended_form_container">
+
+  <div class="fieldrow">
+    <label data-t>Recording Location</label>
+    <input class="recording_location_field" type="text">
+    <button class="copy_to_all" data-field="recording_location_field" onclick="OB.Media.copyField(this);" data-t>Copy Field Button</button>
+  </div>
+
+  <div class="fieldrow">
+    <label data-t>Recording Date</label>
+    <input class="recording_date_field" type="date" placeholder="(Day)/(Month)/(Year)">
+    <button class="copy_to_all" data-field="recording_date_field" onclick="OB.Media.copyField(this);" data-t>Copy Field Button</button>
+  </div>
+
+  <div class="fieldrow">
+    <label data-t>Tracklist</label>
+    <textarea class="tracklist_field"></textarea>
+    <button class="copy_to_all" data-field="tracklist_field" onclick="OB.Media.copyField(this);" data-t>Copy Field Button</button>
+  </div>
+</fieldset>
+<fieldset>
+   <legend><span class="extended_form_title" data-t>Credits</span></legend>
+  <div class="fieldrow media_credits_add">
+   <label data-t>Role</label><select id="media_roles"></select><br/>
+   <label data-t>Name</label><input type="text" id="media_role_add_name">
+  </div>
+
+  <div class=fieldrow media_credits_row">
+   <label data-t>Credits</label>
+   <div class="media_credits" ><span class="media_credit" data-t>Credits</span></div>
+  </div>
+</fieldset>
+<fieldset>
+<div class="content_meta">
+   <legend><span class="extended_form_title" data-t>Content</span></legend>
+  <div class="fieldrow">
+    <label class="port" data-t>Copyright</label>
+    <select class="cc_license_select">
+    <option value="" disabled selected>Creative Commons License</option>
+   </select><button class="viz_button" onclick="OB.Media.showLicense(this);" data-t><span class="viz-button-text">Show License Description</span></button>
+  </div>
+
+  <div class="fieldrow cc_license hidden">
+    <label class="port" data-t>Copyright Statement</label>
+    <form class="cc_license_form" action="" method="post">
+    <textarea id="x" placeholder="Creative Commons text" class="cc_license_text"></textarea>
+    </form>
+  </div>
+  <div class="fieldrow">
+    <label class="port" data-t>Canadian Content (MAPL)</label>
+    <div class="mapl_class">
+    Music <input name="music" value="1" class="padl cancon_field" type="checkbox">
+    Artist <input name="artist" value="2" class="padl cancon_field" type="checkbox">
+    Performance <input name="performance" value="4" class="padl cancon_field" type="checkbox">
+    Lyrics <input name="lyrics" value="8" class="padl cancon_field" type="checkbox">
+  </div>
+  <span id="mapl_logo" class="s-0"></span>
+  </div>
+
+  <div class="fieldrow">
+    <label class="port" data-t>Content Advisory</label>
+    <span class="advisory_class">
+    <span data-t>Profanity</span> <input value="l" class="padl language_advisory_field" type="checkbox">
+    <span data-t>Violence</span><input value="v" class="padl violence_advisory_field" type="checkbox">
+    <span data-t>Substance Abuse</span><input value="d" class="padl drug_advisory_field" type="checkbox">
+    </span>
+    <span class="inset advisory_class">
+    <span data-t>Nudity </span><input value="n" class="padl nudity_advisory_field" type="checkbox">
+    <span data-t>Sexual Content </span><input value="s" class="padl sex_advisory_field" type="checkbox">
+   </span>
+  </div>
+  
+  <div class="fieldrow">
+    <label class="port" data-t>Access Services</label>
+    <div class="access_class">
+    Close Captioned <input value="c" class="padl access_caption_field" type="checkbox">
+    Sign Language <input value="s" class="padl access_sign_field" type="checkbox">
+    Descriptive Video <input value="d" class="padl access_described_field" type="checkbox">
+    </div>
+  </div>
+</div>
+</fieldset>
+</div>

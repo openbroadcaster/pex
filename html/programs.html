@@ -1,0 +1,32 @@
+<!--/*     
+    Copyright 2012 OpenBroadcaster, Inc.
+
+    This file is part of OpenBroadcaster Server.
+
+    OpenBroadcaster Server is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    OpenBroadcaster Server is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with OpenBroadcaster Server.  If not, see <http://www.gnu.org/licenses/></a>.
+*/-->
+<div id="program_container" style="top: 0; left: 0;">
+ <div data-tns="Program Manager">
+  <h1 id="programs_heading" data-t>Heading</h1>
+  <p id="programs_intro" data-t>Introduction</p>
+  <div class="fieldrow">
+   <button data-permissions="manage_programs" id="programs_new_program_button" onclick="OBModules.Programs.newPage();" data-t>New Program Button</button>
+  </div>
+  <obwidget id="program_main_message" type="message"></obwidget>
+  <div id="programs_new_form" class="hidden"></div>
+  <table class="hidden table" id="program_list">
+  </table>
+ </div>
+  <div id="program_footer"></div>
+</div>

@@ -1,0 +1,101 @@
+.mapl_0, .mapl_1, .mapl_2, .mapl_3, .mapl_4, .mapl_5, .mapl_6, .mapl_7, .mapl_8, .mapl_9, .mapl_10, .mapl_11, .mapl_12, .mapl_13, .mapl_14, .mapl_15{
+	background: url(mapl/sprites.png) no-repeat;
+}
+
+.mapl_0{
+	background-position: 0 0;
+	width: 37px;
+	height: 37px;
+}
+
+.mapl_1{
+	background-position: -50px 0;
+	width: 37px;
+	height: 37px;
+}
+
+.mapl_2{
+	background-position: -100px 0;
+	width: 37px;
+	height: 37px;
+}
+
+.mapl_3{
+	background-position: -150px 0;
+	width: 37px;
+	height: 37px;
+}
+
+.mapl_4{
+	background-position: 0 -50px ;
+	width: 37px;
+	height: 37px;
+}
+
+.mapl_5{
+	background-position: -50px -50px ;
+	width: 37px;
+	height: 37px;
+}
+
+.mapl_6{
+	background-position: -100px -50px ;
+	width: 37px;
+	height: 37px;
+}
+
+.mapl_7{
+	background-position: -150px -50px ;
+	width: 37px;
+	height: 37px;
+}
+
+.mapl_8{
+	background-position: 0 -100px ;
+	width: 37px;
+	height: 37px;
+}
+
+.mapl_9{
+	background-position: -50px -100px ;
+	width: 37px;
+	height: 37px;
+}
+
+.mapl_10{
+	background-position: -100px -100px ;
+	width: 37px;
+	height: 37px;
+}
+
+.mapl_11{
+	background-position: -150px -100px ;
+	width: 37px;
+	height: 37px;
+}
+
+.mapl_12{
+	background-position: 0 -150px ;
+	width: 37px;
+	height: 37px;
+}
+
+.mapl_13{
+	background-position: -50px -150px ;
+	width: 37px;
+	height: 37px;
+}
+
+.mapl_14{
+	background-position: -100px -150px ;
+	width: 37px;
+	height: 37px;
+}
+
+.mapl_15{
+	background-position: -150px -150px ;
+	width: 37px;
+	height: 37px;
+}
+
+

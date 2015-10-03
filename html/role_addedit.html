@@ -1,0 +1,24 @@
+<div data-tns="Program Settings">
+
+<obwidget type="message" id="role_addedit_message" ></obwidget>
+
+<fieldset>
+<legend id="role_addedit_heading"></legend>
+
+<div class="fieldrow">
+  <label class="required" data-t>Name</label>
+  <input type="text" id="role_name_input">
+</div>
+</fieldset>
+
+<fieldset>
+<div class="fieldrow">
+  <button class="add" onclick="OBModules.Programs.roleSave();" data-t data-tns="Common">Save</button>
+  <button class="delete edit_only" onclick="OBModules.Programs.roleDelete();" data-t data-tns="Common">Delete</button>
+  <button onclick="OB.UI.closeModalWindow();" data-t data-tns="Common">Cancel</button>
+</div>
+</fieldset>
+
+<input type="hidden" id="role_addedit_id">
+
+</div>

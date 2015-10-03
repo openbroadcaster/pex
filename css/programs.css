@@ -1,0 +1,336 @@
+.port
+{
+  text-align:left;
+  width: 130px;
+}
+
+.gallery_placard
+{
+  border-bottom: 1px solid #eeeeec;
+  padding-top: 10px;
+}
+.program_episode_media, .program_gallery_media
+{
+  text-align: center;
+  line-height: 100px;
+}
+.program_credits, #program_details_credits, #media_details_credits, #media_details_tracklist, .program_episode_media_ids, .program_gallery_media_ids
+{
+  max-width: 800px;
+  min-width: 100px;
+  min-height: 100px;
+  margin: 15px 0;
+  background-color: rgba(0,0,0,0.3);
+  border-radius: 5px;
+  overflow: hidden;
+  padding: 5px;
+  vertical-align: top;
+}
+.program_episode_media_item
+{
+  min-height: 20px;
+  padding: 5px;
+  border-bottom: 1px solid #000;
+  cursor: pointer;
+}
+.program_episode_media_item.selected
+{
+  border:0;
+  outline:2px solid #a00;
+  z-index: 2;
+}
+.capitalize
+{
+   text-transform: capitalize;
+}
+#program_data_middle .addedit_form_title
+{
+  font-weight: 600;
+  margin-right: 16px;
+}
+
+#program_data_middle .summary_field
+{
+  width: 175px;
+  height: 75px;
+}
+
+#credit_role_add_name
+{
+  width:160px;
+}
+#program_delete_list > li
+{
+  padding-bottom: 10px;
+}
+
+#program_delete_list ul
+{
+  padding-left: 10px;
+}
+
+.program_genre td
+{
+  padding:3px 0 0 20px;
+}
+#media_details_advisory
+{
+  color:red;
+}
+
+#media_details_tracklist, #media_details_advisory, #media_details_access
+{
+  white-space: pre-wrap;
+  vertical-align: top;
+}
+#media_data_middle .tracklist_field
+{
+  width: 250px;
+  min-height: 75px;
+}
+
+#media_data_middle .cc_license_text
+{
+  width: 325px;
+  height: 100px;
+}
+
+#media_data_middle .inset
+{
+  display: inline-block;
+  padding-left: 140px;
+}
+.padl
+{
+  margin-right:20px;
+  margin-left:5px;
+}
+
+.cc_license_form
+{
+  display: inline-block;
+  position: relative;
+  padding: 5px;
+  width: 260px;
+  height: 100px;
+}
+
+#license_description_input
+{
+  width:325px;
+  height: 100px;
+}
+
+#sidebar_search_program_container
+{
+  /* display: flex; done by js */
+  -webkit-flex: auto;
+  flex: auto;
+}
+
+#sidebar_search_program_container > *
+{ 
+  -webkit-flex: none;
+  flex: none; /* some children flex settings overridden below */
+}
+
+#sidebar_search_program_results_container
+{
+  overflow-y: scroll;
+  overflow-x: hidden;
+  -webkit-flex: 1 1 0px;
+  flex: 1 1 0px;
+}
+
+#sidebar_search_program_container
+{
+  clear: both;
+  z-index: 2;
+  position: relative;
+  top: -14px;
+  padding: 10px;
+  border-radius: 0px 5px 5px 5px;
+  -moz-border-radius: 0px 5px 5px 5px;
+
+  -webkit-flex-direction: column;
+  flex-direction: column;
+}
+
+#sidebar_search_program_pagination_previous a.disabled, #sidebar_search_program_pagination_next a.disabled
+{
+  color: #888;
+  cursor: default;
+}
+#sidebar_search_program_pagination_previous a.disabled:hover, #sidebar_search_program_pagination_next a.disabled:hover
+{
+  text-decoration: none;
+}
+
+
+#sidebar_search_tab_programs
+{
+  width: 150px;
+  border-radius: 5px 5px 0px 0px;
+  -moz-border-radius: 5px 5px 0px 0px;
+  height: 25px;
+  line-height: 25px;
+  text-align: center;
+  cursor: pointer;
+}
+
+#sidebar_search_tab_programs
+{
+  position: relative;
+  top: -39px;
+  left: 290px;
+  /* z-index: 2; */
+}
+.sidebar_search_program_selected
+{
+  background: rgba(255,255,255,0.8);
+  color: #000;
+}
+
+.sidebar_search_tab
+{
+  border-left: 2px solid #aaa
+}
+
+.sidebar_search_tab.selected
+{
+  border-left: 2px solid #555753
+}
+
+#sidebar_search_program_form
+{
+  padding: 5px;
+  text-align: center;
+}
+
+#sidebar_search_program_buttons, #sidebar_search_program_select_buttons
+{
+  text-align: center;
+  padding-bottom: 5px;
+  margin: 0px -3px;
+}
+
+#sidebar_search_program_buttons
+{
+  padding-top: 4px;
+}
+
+#sidebar_search_playlist_program_buttons
+{
+  padding-top: 10px;
+}
+
+ .sidebar_search_program_buttons_sep
+{
+  border-left: 1px solid #aaa;
+  padding-left: 5px;
+}
+
+#sidebar_search_program_headings, #sidebar_search_program_results
+{
+  border-collapse: collapse;
+}
+
+#sidebar_search_program_results td, #sidebar_search_program_headings th
+{
+  padding: 1px 10px 1px 0;
+  text-align: left;
+}
+
+#sidebar_search_program_headings
+{
+  font-size: 0.9em;
+  margin-top: 10px;
+  font-weight: bold;
+  text-align: left;
+  border-bottom: 1px solid #aaa;
+}
+
+#sidebar_search_program_headings,#sidebar_search_program_results
+{
+  width: 100%;
+  table-layout: fixed;
+}
+
+#sidebar_search_program_results td
+{
+  font-size: 0.8em;
+  border-bottom: 1px solid #777;
+  word-wrap: break-word;
+  overflow: hidden;
+}
+#sidebar_search_program_results .sidebar_search_program_name
+{
+  width: 150px;
+}
+
+#sidebar_search_program_results .sidebar_search_program_description
+{
+  width: 170px;
+}
+
+.sidebar_search_program_result
+{
+  cursor: pointer;
+}
+
+
+#sidebar_search_program_footer .num_results
+{
+  font-weight: bold;
+}
+
+#sidebar_search_program_footer .results
+{
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-align: center;
+  width: 100%;
+}
+.sidebar_search_program_name
+{
+  width: 90px;
+}
+
+.sidebar_search_program_summary
+{
+  width: 240px; /* see sidebar.js $(document).ready() */
+}
+#sidebar_search_program_footer
+{
+  border-top: 1px solid #aaa;
+  border-bottom: 1px solid #aaa;
+  width: 100%;
+  font-size: 0.9em;
+  height: 40px;
+  padding: 3px 0;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+#sidebar_search_program_footer .details
+{
+  width: 100px;
+  height: 40px;
+  line-height: 40px;
+  float: left;
+}
+
+#sidebar_search_program_footer .results
+{
+  height: 40px;
+  line-height: 20px;
+}
+
+
+.sidebar_search_program_selected
+{
+  background: rgba(255,255,255,0.8);
+  color: #000;
+}
+

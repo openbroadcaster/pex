@@ -1,0 +1,36 @@
+<div id="sidebar_search_program_container" class="hidden" data-tns="Sidebar">
+  <div id="sidebar_search_program_form">
+    <span id="sidebar_search_media_filters"><a title="View My Programs" id="sidebar_search_program_my" href="javascript:OB.Sidebar.programSearchFilter('my');" data-t>My Filter Link</a></span>
+    <input type="text" id="sidebar_search_program_input" name="sidebar_search_program_input" placeholder="Enter Search Query" data-t>
+  </div>
+  <table id="sidebar_search_program_headings">
+    <thead>
+      <tr>
+        <th class="sidebar_search_program_title" data-column="title"><a href="javascript:OB.Sidebar.programlistSearchSort('Title');" data-t>Name</a></th>
+        <th class="sidebar_search_program_summary data-column="summary"><a href="javascript:OB.Sidebar.programSearchSort('Summary');" data-t>Description</a></th>
+      </tr>
+    </thead>
+  </table>
+
+  <div id="sidebar_search_program_results_container">
+    <table id="sidebar_search_program_results">
+      <tbody>
+        <tr><td class="sidebar_search_loading" data-t>Loading</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="sidebar_search_program_footer">
+    <div class="results">
+      <div>
+        <span id="sidebar_search_program_pagination_previous"><a href="javascript:OB.Sidebar.programSearchPagePrevious();" data-t>previous</a></span>
+        &bull;
+        <span id="sidebar_search_program_pagination_next"><a href="javascript:OB.Sidebar.programSearchPageNext();" data-t>next</a></span>
+      </div>
+      <div class="num_results">&nbsp;</div></div>
+  </div>
+  <div id="sidebar_search_program_buttons">
+    <button data-permissions="manage_programs" class="add" onclick="OBModules.Programs.newPage();" data-t data-tns="Common">New</button>
+    <button id="sidebar_program_edit_button" onclick="OBModules.Programs.editPage();" data-t data-tns="Common">Edit</button>
+    <button class="delete" id="sidebar_program_delete_button" onclick="OBModules.Programs.deletePage();" data-t data-tns="Common">Delete</button>
+  </div>

@@ -1,0 +1,35 @@
+<div data-tns="Program Settings">
+
+<obwidget type="message" id="media_license_addedit_message" ></obwidget>
+
+<fieldset>
+<legend id="license_addedit_heading"></legend>
+
+<div class="fieldrow">
+  <label class="required" data-t>Title</label>
+  <input type="text" id="license_title_input">
+</div>
+
+<div class="fieldrow">
+  <label class="required" data-t>Shortform</label>
+  <input type="text" id="license_shortform_input">
+</div>
+
+<div class="fieldrow">
+  <label class="required" data-t>Description</label>
+  <textarea id="license_description_input"></textarea>
+</div>
+
+</fieldset>
+
+<fieldset>
+<div class="fieldrow">
+  <button class="add" onclick="OBModules.Programs.licenseSave();" data-t data-tns="Common">Save</button>
+  <button class="delete edit_only" onclick="OBModules.Programs.licenseDelete();" data-t data-tns="Common">Delete</button>
+  <button onclick="OB.UI.closeModalWindow();" data-t data-tns="Common">Cancel</button>
+</div>
+</fieldset>
+
+<input type="hidden" id="license_addedit_id">
+
+</div>

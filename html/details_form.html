@@ -1,0 +1,82 @@
+<div data-tns="Program Manager">
+<h2 id="edit_heading" class="hidden" data-t data-tns="Program Manager">Edit Program</h2>
+<div class="program_details_form">
+ <fieldset>
+  <legend id="program_details_heading" data-t data-tns="Program Manager">Form Heading</legend>
+<p id="new_programs_intro" data-t data-tns="Program Manager">Instructions</p>
+  <div class="fieldrow">
+   <label class="required" data-t data-tns="Program Manager">Title</label>
+   <input type="text" id="program_details_title">
+  </div>
+
+  <div class="fieldrow">
+   <label class="required" data-t data-tns="Program Manager">Description</label>
+   <input type="text" id="program_details_summary">
+  </div>
+
+  <div class="fieldrow">
+    <label data-t data-tns="Program Manager" class="required">Theme</label>
+    <select class="program_details_theme"></select>
+  </div>
+
+  <div class="fieldrow">
+   <label data-t data-tns="Program Manager" >Keywords</label>
+    <input class="keyword_list" type="text">
+    <button class="clear_all" onclick="OBModules.Programs.clearTags(this);" data-t data-tns="Program Manager" >Clear Field Button</button>
+  </div>
+
+  <div class="fieldrow">
+   <label data-t data-tns="Program Manager">Producer</label>
+   <input type="text" id="program_details_producer">
+  </div>
+
+  <div class="fieldrow program_credits_add">
+   <label data-t data-tns="Program Manager">Add Credit</label>
+   <select id="credit_roles"></select>  <input type="text" id="credit_role_add_name">
+  </div>
+
+  <div class=fieldrow program_credits_row">
+   <label data-t data-tns="Program Manager">Credits</label>
+   <div class="program_credits" ><span class="program_credit" data-t data-tns="Program Manager">Credits</span></div>
+  </div>
+
+  <div class="fieldrow program_gallery_media_ids_row">
+   <label data-t data-tns="Program Manager">Placards</label>
+   <div class="droppable_target_media program_gallery_media_ids"><span class="program_gallery_media" data-t data-tns="Program Manager">Gallery Drag Zone</span></div>
+  </div>
+
+  <div class="fieldrow program_episode_media_ids_row">
+   <label data-t data-tns="Program Manager">Episodes</label>
+   <div class="droppable_target_media program_episode_media_ids"><span class="program_episode_media" data-t data-tns="Program Manager">Media Drag Zone</span></div>
+  </div>
+
+  <div class="fieldrow">
+   <label data-t data-tns="Program Manager">Origin</label>
+   <select class="program_details_country"></select>
+  </div>
+
+  <div class="fieldrow">
+   <label data-t data-tns="Program Manager">Language</label>
+   <select class="program_details_language"></select>
+  </div>
+
+  <div class="fieldrow">
+   <label data-t data-tns="Program Manager">Content Advisory</label>
+   <select class="content_advisory_flag"><option value="1" data-t data-tns="Common">Yes</option><option value="0" data-t data-tns="Common">No</option></select>
+  </div>
+
+  <div class="fieldrow">
+   <label data-t data-tns="Program Manager">Dynamic Selection</label>
+   <select class="program_dynamic_select"><option value="1" data-t data-tns="Common">Yes</option><option value="0" data-t data-tns="Common">No</option></select>
+  </div>
+
+  <div class="fieldrow">
+   <label data-t data-tns="Program Manager">Link</label>
+   <input type="text" id="program_details_linkurl">
+  </div>
+  <div class="fieldrow">
+   <label class="empty"></label>
+  </div>
+
+ </fieldset>
+</div>
