@@ -35,6 +35,25 @@ OB.Sidebar.contextMenuProgramDeletePage = function()
 {
   OBModules.Programs.programDelete();
 }
+
+OB.Sidebar.showMediaSearch = (function(){
+  var cached_function = OB.Sidebar.showMediaSearch;
+  return function() {
+  $('#sidebar_search_program_container').hide();
+  var result = cached_function.apply(this.arguments);
+  return result;
+  };
+ }());
+
+OB.Sidebar.showPlaylistSearch = (function(){
+  var cached_function = OB.Sidebar.showPlaylistSearch;
+  return function() {
+  $('#sidebar_search_program_container').hide();
+  var result = cached_function.apply(this.arguments);
+  return result;
+  };
+ }());
+
 OB.Sidebar.showProgramSearch = function()
 {
 
