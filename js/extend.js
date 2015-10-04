@@ -16,6 +16,19 @@
     You should have received a copy of the GNU Affero General Public License
     along with OpenBroadcaster Server.  If not, see <http://www.gnu.org/licenses/></a>.
 */
+
+OB.Media.editPage = (function(){
+  var cached_function = OB.Media.editPage;;
+  return function() {
+  var dhtml = '<button class="edit extend_button" onclick="OB.Media.extendForm(this);" data-t data-tns="Extended Media">Show Extended Details</button><button class="edit hidden basic_button" onclick="OB.Media.extendForm(this);" data-t data-tns="Extended Media">Show Basic Details</button>';
+  var result = cached_function.apply(this.arguments);
+  $('#media_data').prepend(dhtml);
+  OB.UI.translateHTML('#media_data');
+  return result;
+  };
+ }());
+
+
 OB.Media.extendForm = function(button)
 { 
 //get the HTML 
@@ -47,11 +60,16 @@ OB.Media.extendForm = function(button)
       }
 	 else  // go back to basics
       {
+      $('.media_addedit').each(function(index, element)
+      {
+       local_id = $(element).attr('data-id');
        $('#media_extend_'+local_id).remove();
+       });
        $('#media_data button.add').click(OB.Media.save);
        $('.extend_button').show();
        $('.basic_button').hide();
       }
+
 //Hide copy to all for single instance
    if($('.media_addedit').length==1) $('.copy_to_all').addClass('hidden');
 
