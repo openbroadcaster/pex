@@ -37,6 +37,10 @@ OBModules.Programs.initMenu = function()
   $('#sidebar_search_tabs').append('<div class="sidebar_search_tab" id="sidebar_search_tab_programs" onclick="OB.Sidebar.showProgramSearch();"><a data-t>Programs</a></div>');
   var dhtml = OB.UI.getHTML('modules/programs/search.html');
   $('#sidebar_search').append(dhtml);
+  $('#sidebar_search_program_input').keyup(
+      function () {
+        $.doTimeout('program_search_timeout',750, function() { OB.Sidebar.programSearch(); });
+      });
   OB.Sidebar.programEditDeleteVisibility();
   OB.Sidebar.mediaSearchFilter('approved');
   OB.Sidebar.programSearch();
