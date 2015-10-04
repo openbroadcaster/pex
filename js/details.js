@@ -54,7 +54,7 @@ OBModules.Programs.detailsPage = function(pid)
           }
           else 
           {
-	   $('#program_details_episodes_table').append('<tr><td>'+htmlspecialchars(episode.title)+'</td><td>'+format_timestamp(episode.updated)+'</td><td>'+secsToTime(episode.duration,"hms")+'</td></tr>');
+	   $('#program_details_episodes_table').append('<tr><td>'+htmlspecialchars(episode.title)+'</td><td>'+format_timestamp(episode.updated)+'</td><td>'+secsToTime(episode.duration,"hms")+' <a href="javascript:OB.Sidebar.playerPlay(\'program\',\'audio\','+episode.id+')">Preview</a></td></tr>');
           }
 	//handle credits
  var credits  = progdata['credits'];
