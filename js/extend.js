@@ -20,10 +20,9 @@
 OB.Media.editPage = (function(){
   var cached_function = OB.Media.editPage;;
   return function() {
-  var dhtml = '<button class="edit extend_button" onclick="OB.Media.extendForm(this);" data-t data-tns="Extended Media">Show Extended Details</button><button class="edit hidden basic_button" onclick="OB.Media.extendForm(this);" data-t data-tns="Extended Media">Show Basic Details</button>';
+  var dhtml = '<button class="edit extend_button" onclick="OB.Media.extendForm(this);">Show Extended Details</button><button class="edit hidden basic_button" onclick="OB.Media.extendForm(this);">Show Basic Details</button>';
   var result = cached_function.apply(this.arguments);
   $('#media_data').prepend(dhtml);
-  OB.UI.translateHTML('#media_data');
   return result;
   };
  }());
@@ -39,9 +38,10 @@ OB.Media.extendForm = function(button)
    $('.media_addedit').each(function(index, element)
       {
        local_id = $(element).attr('data-id');
-       $('#media_addedit_'+local_id).append('<div id="media_extend_'+local_id+'" class="media_extend" data-id="'+local_id+'">'+form+'</div>');
-       $('#media_addedit_'+local_id+' .cc_license_select').attr('data-id',local_id);
-       $('#media_addedit_'+local_id+' .cc_license_form').attr('data-id',local_id);
+       var $form = $('#media_addedit_'+local_id);
+       $form.find('.addedit_form_container').append('<div id="media_extend_'+local_id+'" class="media_extend" data-id="'+local_id+'">'+form+'</div>');
+       $form.find('.cc_license_select').attr('data-id',local_id);
+       $form.find('.cc_license_form').attr('data-id',local_id);
        $('.extend_button').hide();
        $('.basic_button').show();
        $('#media_data button.add').click(OB.Media.extendedSave);
@@ -110,19 +110,19 @@ OB.Media.metaFormProcess = function(media_id)
        $form.find('.cc_license_select').val(metadata['license.id']);
        $form.find('#'+media_id+'_'+license).show().siblings().hide();
     $form.find('button.viz_button').text("Hide License");
-       if((metadata['cancon']).indexOf('m') >= 0) $form.find('.cancon_field[value=1]').attr('checked',true);
-       if((metadata['cancon']).indexOf('a') >= 0) $form.find('.cancon_field[value=2]').attr('checked',true);
-       if((metadata['cancon']).indexOf('p') >= 0) $form.find('.cancon_field[value=4]').attr('checked',true);
-       if((metadata['cancon']).indexOf('l') >= 0) $form.find('.cancon_field[value=8]').attr('checked',true);
+       if(metadata['cancon']&&(metadata['cancon']).indexOf('m') >= 0) $form.find('.cancon_field[value=1]').attr('checked',true);
+       if(metadata['cancon']&&(metadata['cancon']).indexOf('a') >= 0) $form.find('.cancon_field[value=2]').attr('checked',true);
+       if(metadata['cancon']&&(metadata['cancon']).indexOf('p') >= 0) $form.find('.cancon_field[value=4]').attr('checked',true);
+       if(metadata['cancon']&&(metadata['cancon']).indexOf('l') >= 0) $form.find('.cancon_field[value=8]').attr('checked',true);
        OB.Media.setMapl();
-       if((metadata['advisory']).indexOf('l') >= 0) $form.find('.language_advisory_field').attr('checked',true);
-       if((metadata['advisory']).indexOf('v') >= 0) $form.find('.violence_advisory_field').attr('checked',true);
-       if((metadata['advisory']).indexOf('d') >= 0) $form.find('.drug_advisory_field').attr('checked',true);
-       if((metadata['advisory']).indexOf('n') >= 0) $form.find('.nudity_advisory_field').attr('checked',true);
-       if((metadata['advisory']).indexOf('s') >= 0) $form.find('.sex_advisory_field').attr('checked',true);
-       if((metadata['accessibility']).indexOf('c') >= 0) $form.find('.access_caption_field').attr('checked',true);
-       if((metadata['accessibility']).indexOf('s') >= 0) $form.find('.access_sign_field').attr('checked',true);
-       if((metadata['accessibility']).indexOf('d') >= 0) $form.find('.access_described_field').attr('checked',true);
+       if(metadata['advisory']&&(metadata['advisory']).indexOf('l') >= 0) $form.find('.language_advisory_field').attr('checked',true);
+       if(metadata['advisory']&&(metadata['advisory']).indexOf('v') >= 0) $form.find('.violence_advisory_field').attr('checked',true);
+       if(metadata['advisory']&&(metadata['advisory']).indexOf('d') >= 0) $form.find('.drug_advisory_field').attr('checked',true);
+       if(metadata['advisory']&&(metadata['advisory']).indexOf('n') >= 0) $form.find('.nudity_advisory_field').attr('checked',true);
+       if(metadata['advisory']&&(metadata['advisory']).indexOf('s') >= 0) $form.find('.sex_advisory_field').attr('checked',true);
+       if(metadata['advisory']&&(metadata['accessibility']).indexOf('c') >= 0) $form.find('.access_caption_field').attr('checked',true);
+       if(metadata['accessibility']&&(metadata['accessibility']).indexOf('s') >= 0) $form.find('.access_sign_field').attr('checked',true);
+       if(metadata['accessibility']&&(metadata['accessibility']).indexOf('d') >= 0) $form.find('.access_described_field').attr('checked',true);
 //       $form.find('.advisory_field').val(metadata['tracklist']);
 //       $form.find('.accessibility_field').val(metadata['tracklist']);
 // add our credits
