@@ -98,7 +98,28 @@ class ProgramsModel extends OBFModel
     return $this->db->get('programs');
 
   }
+  public function get_episode($params)
+{
+    foreach($params as $name=>$value) $$name=$value;
+    $this->db->leftjoin('media_meta','media_meta.id','programs_media_ids.media_id');
+    $this->db->where('program_id',$id);
+    if($filters){
+	foreach($filters as $filter)
+   	{
+      	$column = $filter['column'];
+      	$value = $filter['value'];
+      	$operator = (empty($filter['operator']) ? '=' : $filter['operator']);
+      	$this->db->where($column,$value,$operator);
+	}
+    }
+    $this->db->orderby('programs_media_ids.episode');
+    $episode_ids = $this->db->get('programs_media_ids');
+    $media_ids = array();
+    
+    foreach($episode_ids as $episode_id) $media_ids[]=$episode_id['recording_location'];
 
+    return $media_ids;
+}
   public function get($params)
   {
 

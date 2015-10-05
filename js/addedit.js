@@ -162,7 +162,7 @@ OBModules.Programs.detailProgramList = function()
                 
       		dhtml += OBModules.Programs.detailsForm(programs[i]);
 
-      		dhtml +='<fieldset><div class="fieldrow"><button class="add" onclick="OBModules.Programs.programSave('+programs[i].pid+');" data-permissions="manage_programs" data-t data-tns="Common">Save</button><button onclick="OBModules.Programs.programDelete('+programs[i].pid+');" class="delete" data-permissions="manage_programs" data-t data-tns="Common">Delete</button><button onclick="OBModules.Programs.programDetails('+programs[i].pid+')" data-permissions="manage_programs" data-t data-tns="Common">Cancel</button></div></fieldset>\
+      		dhtml +='<fieldset><div class="fieldrow"><button class="add" onclick="OBModules.Programs.programSave('+programs[i].pid+');" data-permissions="manage_programs" data-t data-tns="Common">Save</button><button onclick="OBModules.Programs.programDelete('+programs[i].pid+');" class="delete" data-permissions="manage_programs" data-t data-tns="Common">Delete</button><button onclick="OBModules.Programs.details()" data-permissions="manage_programs" data-t data-tns="Common">Cancel</button></div></fieldset>\
 			</td></tr>';
 
      		$('#program_list').append(dhtml);
@@ -282,12 +282,13 @@ OBModules.Programs.appendCredit = function(id)
 {
  if(!id) id='new';
   $form = $('.program_details_form[data-pid='+id+']');
+     var rind = $form.find('#credit_roles :selected').val();
      var role = $form.find('#credit_roles :selected').text();
      var credit = $form.find('#credit_role_add_name').val();
      var nextnum = $form.find('.program_credits').children().length + 1;
-     if(credit !="") OBModules.Programs.addCredit(id,nextnum,role + ' : ' + credit);
+     if(credit !="" && rind !="") OBModules.Programs.addCredit(id,nextnum,role + ' : ' + credit);
     $form.find('#credit_role_add_name').val('');
-    $form.find('#credit_roles').val('0');
+    $form.find('#credit_roles').val('');
 }
 
 OBModules.Programs.editPage = function()
@@ -308,6 +309,7 @@ OBModules.Programs.editPage = function()
 
     // set device id on form.
     $('.program_details_form').attr('data-pid',program_data['pid']);
+
     OBModules.Programs.detailsFormProcess(program_data);
     OBModules.Programs.roleList(program_data['pid']);
     OBModules.Programs.themeList(program_data);
@@ -332,7 +334,7 @@ OBModules.Programs.editPage = function()
       {
         OBModules.Programs.galleryAddMediaId(program_data['pid'],gallery_ids[j].id,gallery_ids[j].title);
       }
-    var dhtml ='<fieldset><div class="fieldrow"><button class="add" onclick="OBModules.Programs.programSave('+program_data['pid']+');" data-permissions="manage_programs" data-t data-tns="Common">Save</button><button onclick="OBModules.Programs.programDelete('+data.data.pid+');" class="delete" data-permissions="manage_programs" data-t data-tns="Common">Delete</button><button onclick="OBModules.Programs.programDetails('+data.data.pid+')" data-t data-tns="Common">Cancel</button></div></fieldset>\
+    var dhtml ='<fieldset><div class="fieldrow"><button class="add" onclick="OBModules.Programs.programSave('+program_data['pid']+');" data-permissions="manage_programs" data-t data-tns="Common">Save</button><button onclick="OBModules.Programs.programDelete('+data.data.pid+');" class="delete" data-permissions="manage_programs" data-t data-tns="Common">Delete</button><button onclick="OBModules.Programs.details()" data-t data-tns="Common">Cancel</button></div></fieldset>\
                         </td></tr>';
    $('.program_details_form').append(dhtml); 
     $('.program_details_form').show();
@@ -407,6 +409,7 @@ OBModules.Programs.newPage = function()
    $('#programs_new_form').append(htmladd);
    $('.program_details_country').val(39); //Canada
    $('.program_details_language').val(36); //English
+   $('.content_advisory_flag').val(0); //No advisory
    $('#programs_new_form').show();
    $('#programs_new_program_button').hide();
     OB.UI.translateHTML( $('.program_details_form') );
@@ -489,11 +492,14 @@ OBModules.Programs.programSave = function(program_id)
   var credits = new Array();
   $form.find('.program_credits').children().each(function(index) {
        str = ($(this).text());
+       if(str !='Credits')
+       {
        ind = ($(this).index());
        firstpart = $.trim(str.split(':')[0]);
        role = $.trim(firstpart.split(' ').slice(1).join(' '));
        name = $.trim(str.split(':')[1]);
        credits.push(ind+':'+role+':'+name); 
+       }
   });
 
 

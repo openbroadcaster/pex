@@ -73,7 +73,7 @@ OBModules.Programs.roleList = function(id)
   }
      $form.find('.program_credits_add').append('<input type="button" class="rmargin" value="Add" onclick="OBModules.Programs.appendCredit(\''+id+'\')" >');
 
-      $form.find('#credit_roles').val('0');
+      //$form.find('#credit_roles').val('0');
 });
 }
 
@@ -86,10 +86,10 @@ OBModules.Programs.themeList = function(data)
   	for(var i in list)
   	{
       	$form = $('.program_details_form[data-pid='+program_id+']');
-   //   	$form.find('.program_details_theme').attr('data-id',id);
-   //   	$form.find('.program_details_theme[data-id='+id+']').append('<option value="'+list[i].id+'">'+htmlspecialchars(list[i].name)+'</option>');
-      	$form.find('.program_details_theme').append('<option value="'+list[i].id+'">'+htmlspecialchars(list[i].name)+'</option>');
+      	$form.find('.program_details_theme').attr('data-id',program_id);
+      	$form.find('.program_details_theme[data-id='+program_id+']').append('<option value="'+list[i].id+'">'+htmlspecialchars(list[i].name)+'</option>');
+   //  	$form.find('.program_details_theme').append('<option value="'+list[i].id+'">'+htmlspecialchars(list[i].name)+'</option>');
   	}
-        if(!program_id==='new') {$form.find('.program_details_theme').val(data.theme_id);}
+        if(program_id != 'new') $form.find('.program_details_theme').val(data.theme_id);
    });
 }

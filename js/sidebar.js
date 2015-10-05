@@ -86,9 +86,9 @@ OB.Sidebar.contextMenuProgramDetailsPage = function(id)
   OBModules.Programs.detailsPage(id);
 }
 
-OB.Sidebar.contextMenuProgramDeletePage = function()
+OB.Sidebar.contextMenuProgramDeletePage = function(id)
 {
-  OBModules.Programs.programDelete();
+  OBModules.Programs.programDelete(id);
 }
 
 OB.Sidebar.showMediaSearch = (function(){

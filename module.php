@@ -187,7 +187,7 @@ class ProgramsModule extends OBFModule
         $this->db->delete('users_permissions');
         $this->db->where('name','manage_programs');
         $this->db->delete('users_permissions');
-
+/*
         $this->db->query('DROP TABLE `program_keywords`;');
         $this->db->query('DROP TABLE `program_themes`;');
      //   $this->db->query('DROP TABLE `license_attributes`;');
@@ -198,6 +198,7 @@ class ProgramsModule extends OBFModule
         $this->db->query('DROP TABLE `gallery_media_ids`;');
         $this->db->query('DROP TABLE `media_meta`;');
         $this->db->query('DROP TABLE `programs`;');
+*/
       return true;
 
        }

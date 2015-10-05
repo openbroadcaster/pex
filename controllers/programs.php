@@ -61,6 +61,15 @@ class Programs extends OBFController
     return array(true,"All programs",$programs);
   }
 
+  public function get_episodes()
+  {
+    $id = $this->data('pid');
+    $params['id'] = $this->data('pid');
+    $params['filters'] = $this->data('filters');
+    $episodes = $this->ProgramsModel('get_episode',$params);
+    return array(true,"Episodes",$episodes);
+  }
+
   public function get_placard()
   {
     $id = $this->data('pid');
