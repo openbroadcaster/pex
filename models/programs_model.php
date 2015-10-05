@@ -66,7 +66,13 @@ class ProgramsModel extends OBFModel
       {
         $this->db->where('id',$episode_id);
         $media=$this->db->get_one('media');
-        if($media) $result['episode_ids'][]=$media;
+        if($media)
+        {
+         $this->db->where('id',$episode_id);
+         $extended=$this->db->get_one('media_meta');
+         if($extended) $media = array_merge($media,$extended);
+        }
+         $result['episode_ids'][]=$media;
       }
 
       // get our gallery ids
@@ -154,7 +160,13 @@ class ProgramsModel extends OBFModel
       {
         $this->db->where('id',$episode_id);
         $media=$this->db->get_one('media');
-        if($media) $result[$index]['episode_ids'][]=$media;
+        if($media) 
+        { 
+         $this->db->where('id',$episode_id);
+         $extended=$this->db->get_one('media_meta');
+         if($extended) $media = array_merge($media,$extended);
+        }
+         $result['episode_ids'][]=$media;
       }
 
       // get our gallery ids
