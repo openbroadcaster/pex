@@ -55,7 +55,7 @@ OBModules.Programs.detailsPage = function(pid)
           else 
           {
            var episode_date=episode.recording_date;
-	   $('#program_details_episodes_table').append('<tr><td>'+htmlspecialchars(episode.title)+'</td><td>'+episode_date+'</td><td>'+secsToTime(episode.duration,"hms")+'</td><td><a href="javascript:OB.Media.extendedDetailsPage('+episode.id+')">Details</a></td><td><a href="javascript:OB.Sidebar.playerPlay(\'program\',\'audio\','+episode.id+')">Preview</a></td></tr>');
+	   $('#program_details_episodes_table').append('<tr><td>'+htmlspecialchars(episode.title)+'</td><td>'+episode_date+'</td><td>'+secsToTime(episode.duration,"hms")+'</td><td><button class="add" onclick="OBModules.Programs.addeditPreview('+episode.id+')">Details</button></td><td><a href="javascript:OB.Sidebar.playerPlay(\'program\',\'audio\','+episode.id+')">Preview</a></td></tr>');
           }
 	//handle credits
  var credits  = progdata['credits'];
@@ -71,6 +71,19 @@ OBModules.Programs.detailsPage = function(pid)
       $('#program_details').show();
 
     });
+}
+
+OBModules.Programs.addeditPreview = function(id)
+{
+if(OB.Settings.permissions.indexOf('manage_programs')!=-1)
+   {
+    OB.Media.extendedDetailsPage(id);
+    //OB.Media.editPage(episode);	
+   } 
+     else
+   {
+    OB.Media.extendedDetailsPage(id);
+   }
 }
 
 OBModules.Programs.detailsAddCredit = function(program_id,credit_id,credit_text)

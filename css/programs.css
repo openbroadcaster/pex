@@ -1,3 +1,13 @@
+#program_details_episodes_table th {
+  text-align: left;
+}
+#program_details_episodes_table td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space:nowrap;
+  max-width: 15pc;
+}
+
 .port
 {
   text-align:left;

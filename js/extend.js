@@ -27,6 +27,56 @@ OB.Media.editPage = (function(){
   };
  }());
 
+OB.Media.editDetails = function(data){
+
+  OB.Media.media_info = new Array(); // reset 
+
+  OB.UI.replaceMain('media/addedit.html');
+  $('#media_heading').text(OB.t('Edit Media','Heading'));
+  $('#media_top_instructions').text(OB.t('Edit Media','Instructions'));
+
+  $('#media_upload_container').hide();
+
+  $('#media_data').show();
+
+
+    var local_id = data.id
+
+    OB.Media.mediaAddeditForm(local_id,$data.title);
+
+    $('#upload_'+local_id+'_data_container').attr('data-id',local_id); // id is ID in database, it being set means we are editing existing data.
+
+    $form = $('.media_addedit').last();
+
+    $form.attr('data-edit',1);
+
+    $form.find('.artist_field').val(data.artist);
+    $form.find('.title_field').val(data-title);
+    $form.find('.album_field').val(data.album);
+    $form.find('.year_field').val(data.year);
+
+    $form.find('.category_field').val(data.category_id);
+    OB.Media.updateGenreList(local_id);
+
+    $form.find('.country_field').val(data.country_id);
+    $form.find('.language_field').val(data.language_id);
+    $form.find('.genre_field').val(data.genre_id);
+
+    $form.find('.comments_field').val(data.comments);
+
+    $form.find('.copyright_field').val(data.is_copyright_owner);
+    $form.find('.status_field').val(data.public_status);
+    $form.find('.dynamic_select_field').val(data.dynamic_select);
+
+    if((data.status)=='approved') $form.find('.approved_field').val(1);
+    else $form.find('.approved_field').val(0);
+
+$('.copy_to_all').addClass('hidden');
+
+  $('.new_media_only').hide();
+
+
+}
 
 OB.Media.extendForm = function(button)
 { 
