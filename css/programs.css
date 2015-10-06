@@ -1,13 +1,33 @@
+.fixed {
+table-layout: fixed;
+width:100%;
+}
+.wide-col{
+ width:12pc;
+}
+.narrow-col{
+ width:4pc;
+ padding-right:8px;
+}
 #program_details_episodes_table th {
+  border-bottom: solid 1px white;
   text-align: left;
 }
+#program_details_episodes_table tr td:first-child {
+ border-left: solid 2px red;
+}
+
 #program_details_episodes_table td {
+  border-bottom: dashed 1px white;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space:nowrap;
-  max-width: 15pc;
+  padding: 4px;
 }
 
+#program_details_episodes_table tr:first-child {
+   background-color: #a0a0a0;
+}
 .port
 {
   text-align:left;

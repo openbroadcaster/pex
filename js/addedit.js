@@ -142,7 +142,7 @@ OBModules.Programs.detailProgramList = function()
 {
   $('#program_list').hide();
 
-  $('#program_list').html('<tr><th data-t data-tns="Program Manager">Title</th><th data-t data-tns="Program Manager">Producer</th><th data-t data-tns="Program Manager">Description</th><th>&nbsp;</th></tr>');
+  $('#program_list').html('<tr><th data-t data-tns="Program Manager">Title</th><th data-t data-tns="Program Manager">Producer</th><th data-t data-tns="Program Manager"># of Episodes</th><th>&nbsp;</th></tr>');
 
   OB.API.post('programs','get_program_list', { }, function(data) { 
   
@@ -155,7 +155,7 @@ OBModules.Programs.detailProgramList = function()
 	    var dhtml = '<tr id="program_'+programs[i].pid+'_row">\
 		<td >'+htmlspecialchars(programs[i].title)+'</td>\
           	<td>'+htmlspecialchars(programs[i].producer)+'</td>\
-		<td>'+htmlspecialchars(programs[i].summary)+'</td>\
+		<td>'+programs[i].episode_ids.length+'</td>\
           	<td><a class="program_expand_link" id="program_'+programs[i].pid+'_expand_link" href="javascript: OBModules.Programs.programDetails('+programs[i].pid+');" data-t data-tns="Common">Expand</a></td></tr>\
           	<tr class="hidden expanding program_details" id="program_'+programs[i].pid+'_details"><td colspan="4">\
             	<obwidget id="program_'+programs[i].pid+'_message" type="message"></obwidget>';

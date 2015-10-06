@@ -166,7 +166,7 @@ class ProgramsModel extends OBFModel
          $extended=$this->db->get_one('media_meta');
          if($extended) $media = array_merge($media,$extended);
         }
-         $result['episode_ids'][]=$media;
+         $result[$index]['episode_ids'][]=$media;
       }
 
       // get our gallery ids
