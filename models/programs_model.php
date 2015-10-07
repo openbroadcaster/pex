@@ -72,6 +72,12 @@ class ProgramsModel extends OBFModel
          $extended=$this->db->get_one('media_meta');
          if($extended) $media = array_merge($media,$extended);
         }
+	//Get episode credits
+         $roles = $this('get_episode_credits',$episode_id);
+         foreach($roles as $role)
+         {
+	   $media['credits'][]=$role; 
+	 } 
          $result['episode_ids'][]=$media;
       }
 
@@ -89,10 +95,7 @@ class ProgramsModel extends OBFModel
       $roles = $this('get_credit_roles',$id); //role and name
       foreach($roles as $role)
       {
-        $this->db->where('role_id',$role);
-        $this->db->where('program_id',$id);
-        $credit=$this->db->get_one('programs_credit_roles');
-        if($credit) $result['credits'][]=$credit;
+        $result['credits'][]=$role;
       }
    }
    return $result;
@@ -160,15 +163,20 @@ class ProgramsModel extends OBFModel
       {
         $this->db->where('id',$episode_id);
         $media=$this->db->get_one('media');
-        if($media) 
-        { 
+        if($media)
+        {
          $this->db->where('id',$episode_id);
          $extended=$this->db->get_one('media_meta');
          if($extended) $media = array_merge($media,$extended);
         }
+        //Get episode credits
+         $roles = $this('get_episode_credits',$episode_id);
+	  foreach($roles as $role)
+	  {
+	   $media['credits'][] = $role;
+	  }
          $result[$index]['episode_ids'][]=$media;
       }
-
       // get our gallery ids
       $result[$index]['gallery_ids']=array();
       $gallery_ids = $this('get_gallery_ids',$row['pid']);
@@ -184,10 +192,7 @@ class ProgramsModel extends OBFModel
       $roles = $this('get_credit_roles',$row['pid']); //role and name
       foreach($roles as $role)
       {
-        $this->db->where('role_id',$role);
-        $this->db->where('program_id',$row['pid']);
-        $credit = $this->db->get_one('programs_credit_roles');
-        if($credit) $result[$index]['credits'][]=$credit;
+        $result[$index]['credits'][]=$role;
       }
 
     }
@@ -239,7 +244,17 @@ class ProgramsModel extends OBFModel
     $roles = $this->db->get('programs_credit_roles');
     $credits = array();
     
-    foreach($roles as $role) $credits[]=$role['role_id'];
+    foreach($roles as $role) $credits[]=$role;
+    return $credits;
+  }
+
+  public function get_episode_credits($id)
+  {
+    $this->db->where('media_id',$id);
+    $roles = $this->db->get('media_credit_roles');
+    $credits = array();
+    
+    foreach($roles as $role) $credits[]=$role;
     return $credits;
   }
 

@@ -341,7 +341,7 @@ OB.Media.extendedSave = function()
        str = ($(this).text());
        ind = ($(this).index());
        firstpart = $.trim(str.split(':')[0]);
-       role = $.trim(firstpart.split(' ')[1]);
+       role = $.trim(firstpart.split(' ').slice(1).join(' '));
        name = $.trim(str.split(':')[1]);
        item.credits_array.push(ind+':'+role+':'+name);
   });

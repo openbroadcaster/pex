@@ -1,3 +1,39 @@
+#episode_details_table {
+width:100%;
+}
+#episode_details_table #credits {
+  width:35%;
+  text-align:left;
+  display:inline-block;
+  color: #e09529;
+}
+#episode_details_table #tracklist {
+  width:65%;
+  text-align:left;
+  display:inline-block;
+  color: #e09529;
+}
+#episode_details_table #media_details_tracklist {
+float:right;
+width:65%;
+overflow:auto;
+white-space:wrap;
+font-size: 0.8em;
+}
+#episode_details_table #media_details_credits {
+float:left;
+overflow:hidden;
+width:30%;
+white-space: nowrap;
+font-size: 0.8em;
+}
+#episode_details_table label{
+text-align: left;
+}
+#episode_details_table span{
+clear:none;
+display:block;
+}
 .fixed {
 table-layout: fixed;
 width:100%;
@@ -14,7 +50,7 @@ width:100%;
   text-align: left;
 }
 #program_details_episodes_table tr td:first-child {
- border-left: solid 2px red;
+ border-left: solid 2px #e09529;
 }
 
 #program_details_episodes_table td {
@@ -28,6 +64,7 @@ width:100%;
 #program_details_episodes_table tr:first-child {
    background-color: #a0a0a0;
 }
+
 .port
 {
   text-align:left;

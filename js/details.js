@@ -42,6 +42,14 @@ OBModules.Programs.detailsPage = function(pid)
       $('#program_details_keywords').text(progdata.keywords);
       $('#program_details_keywords').addClass('capitalize');
 
+      //handle program credits
+
+        var credits = progdata.credits;
+        for (var j in credits)
+        {
+        OBModules.Programs.detailsAddCredit(progdata.pid, credits[j].role_id, credits[j].role + ' : ' + credits[j].name);
+        }
+
       // handle episode items
       if(typeof(progdata.episode_ids)=='undefined' || progdata.episode_ids.length==0) $('#program_details_episodes_table').replaceWith(htmlspecialchars(OB.t('Program Details','No episodes found')));
 
@@ -60,22 +68,23 @@ OBModules.Programs.detailsPage = function(pid)
            dhtml +='<td ><button class="add episode_expand_link" id="episode_'+episode.id+'_expand_link" onclick="OBModules.Programs.episodeDetails('+episode.id+')">Expand</button></td>';
            dhtml +='<td><a href="javascript:OB.Sidebar.playerPlay(\'program\',\'audio\','+episode.id+')">Preview</a></td></tr>';
 	   dhtml +='<tr class="episode_details hidden" id="episode_'+episode.id+'_details"><td style="border-left:0px;"></td><td colspan="5">';
-           var $html = $(OB.UI.getHTML('modules/programs/media_extend_detail.html'));
-           dhtml += $html.html();
+           var $html = OBModules.Programs.episodeForm(episode.id);
+           dhtml += $html;
            dhtml += '</td></tr>/';
 	   $('#program_details_episodes_table').append(dhtml);
           }
-    OBModules.Programs.episodeDetailsProcess(episode.id);
+    	OBModules.Programs.episodeDetailsProcess(episode);
 
-	//handle credits
- var credits  = progdata['credits'];
-   for(var j in credits)
-    {
-     OBModules.Programs.detailsAddCredit(progdata['pid'],credits[j].role_id,credits[j].role+' : '+credits[j].name);
+         $('#episode_'+episode.id+'_details #media_details_tracklist').text(episode.tracklist);
+	//handle episode credits
+	 var credits = episode.credits;
+ 	for (var j in credits)
+   	{
+    	OBModules.Programs.episodeAddCredit(episode.id, credits[j].role_id, credits[j].role + ' : ' + credits[j].name);
+    	}
+     }); //end of episode list
+
     }
-
-        });
-      }
 
       $('#program_details_message').html('');
       $('#program_details').show();
@@ -105,10 +114,16 @@ OBModules.Programs.detailsAddCredit = function(program_id,credit_id,credit_text)
     }
 }
 
+OBModules.Programs.episodeAddCredit = function(episode_id,credit_id,credit_text)
+{
+      var html = '<div data-id="'+credit_id+'" class="capitalize">'+htmlspecialchars(credit_text)+'</div>';
+      $('#episode_'+episode_id+'_details #media_details_credits').append(html);  
+}
+
 OBModules.Programs.episodeForm = function(episode_id){
 
-  var $html = $(OB.UI.getHTML('modules/programs/extend.html'));
-  $html.find('.extended_form_container').attr('data-pid',episode_id);
+  var $html = $(OB.UI.getHTML('modules/programs/episode_detail.html'));
+  $html.find('.episode_details_table').attr('data-id',episode_id);
   return $html.html();
 }
 
@@ -131,6 +146,7 @@ OBModules.Programs.episodeDetails = function(id)
   $('#program_details_episodes_table .episode_expand_link').not('#episode_'+id+'_expand_link').html(expand_text);
 }
 
-OBModules.Programs.episodeDetailsProcess = function(id)
+OBModules.Programs.episodeDetailsProcess = function(data)
 {
+ var $form=$('#episode_details_table[data-id='+data.id+']');
 }
