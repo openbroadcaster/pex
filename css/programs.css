@@ -1,6 +1,9 @@
 #episode_details_table {
 width:100%;
 }
+#episode_title{
+  color: #e09529;
+}
 #episode_details_table #credits {
   width:35%;
   text-align:left;
@@ -22,7 +25,7 @@ font-size: 0.8em;
 }
 #episode_details_table #media_details_credits {
 float:left;
-overflow:hidden;
+overflow:auto;
 width:30%;
 white-space: nowrap;
 font-size: 0.8em;

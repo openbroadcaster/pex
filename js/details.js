@@ -75,6 +75,7 @@ OBModules.Programs.detailsPage = function(pid)
           }
     	OBModules.Programs.episodeDetailsProcess(episode);
 
+         $('#episode_'+episode.id+'_details #episode_title').text(episode.title);
          $('#episode_'+episode.id+'_details #media_details_tracklist').text(episode.tracklist);
 	//handle episode credits
 	 var credits = episode.credits;
