@@ -251,6 +251,14 @@ class ProgramsModel extends OBFModel
     return $media_ids;
   }
 
+  public function get_program_placard($id)
+   {
+   $this->db->where('program_id',$id);
+   $placard= $this->db->get_one('gallery_media_ids');
+   $media_id= array();
+   foreach($media_id as $media) $media_id[]=$placard['media_id'];
+   	return $placard;
+   }
   public function get_episode_placard ($pid,$id)
    {
     $this->db->where('program_id',$pid);

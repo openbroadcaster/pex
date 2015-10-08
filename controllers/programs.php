@@ -85,6 +85,13 @@ class Programs extends OBFController
     return array(true,"Placard",$placard);
   }
 
+  public function get_program_placard()
+  {
+    $id = $this->data('pid');
+    $placard = $this->ProgramsModel('get_program_placard',$id);
+    return array(true,"Placard",$placard);
+  }
+
   public function get_credits()
 {
    $id = $this->data('pid');

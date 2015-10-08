@@ -134,6 +134,7 @@ for(var i in $tagwords)
   //  $form.find('.program_default_placard').attr("src",placard_src);
   }
   $('.program_episode_media_ids').sortable({ start: OBModules.Programs.addeditSortStart, stop: OBModules.Programs.addeditSortStop });
+  $('.program_gallery_media_ids').sortable({ start: OBModules.Programs.addeditSortStart, stop: OBModules.Programs.addeditSortStop });
 }
 
 

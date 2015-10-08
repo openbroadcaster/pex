@@ -64,7 +64,14 @@ OBModules.Programs.detailsPage = function(pid)
           else 
           {
            var episode_date=episode.recording_date;
+           if(episode.placard_id)
+           {
            var placard_src ='<img height="50px;" src="preview.php?id='+episode.placard_id+'&dl=0&mode=0"/>'
+           } else {
+            
+	    //var placard_src = '<img height="50px;" src="preview.php?id='+pl_num+'&dl=0&mode=0"/>';
+	    var placard_src = '';
+           }
            var dhtml = '<tr><td>'+placard_src+'</td><td>'+htmlspecialchars(episode.title)+'</td><td>'+episode_date+'</td><td>'+secsToTime(episode.duration,"hms")+'</td>';
            dhtml +='<td ><button class="add episode_expand_link" id="episode_'+episode.id+'_expand_link" onclick="OBModules.Programs.episodeDetails('+episode.id+')">Expand</button></td>';
            dhtml +='<td><a href="javascript:OB.Sidebar.playerPlay(\'program\',\'audio\','+episode.id+')">Preview</a></td></tr>';
