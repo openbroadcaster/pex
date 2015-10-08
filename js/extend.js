@@ -53,7 +53,7 @@ OB.Media.extendForm = function(button)
 //set-up MAPL logos
 
 //setup data
-       OB.Media.showGallery(local_id);
+//       OB.Media.showGallery(local_id);
      OB.Media.metaFormProcess(local_id);
       }); //end of form instance
       }
@@ -129,31 +129,40 @@ OB.Media.metaFormProcess = function(media_id) {
         for (var j in credits) {
           OB.Media.detailsAddCredit(credits[j].media_id, credits[j].role_id, credits[j].role + ' : ' + credits[j].name);
         }
-        $('input:radio[name="media_2_placard"]').filter('[value="9"]').prop('checked',true);
       //set saved placard
 
+       OB.Media.showGallery(metadata.id,metadata.placard_id);
     })); // end of API call
 }
 
-OB.Media.showGallery = function(id)
+OB.Media.showGallery = function(id,placard_id)
 {
+  var $form = $('.media_extend[data-id=' + id + ']');
   OB.API.post('programs','programmed',{'id':id},function(data){
+//we only get the first program, should either limit or allow multiple
    if (data.status == false) return;
     var program_id=data.data.program_id;
+    var program_title =data.data.title;
+    var title_htm = '<h2>'+program_title+'</h2>';
+    $form.find('.media_placards').append(title_htm);
+//set the program title for the placards
     OB.API.post('programs','get_placard',{'pid':program_id}, function(results){
   var gallery = results.data;
   var dhtml = '';
   for(var i in gallery)
 	{
 var placard_src ='<figure><img src="preview.php?id='+gallery[i]+'&dl=0&mode=0"/></figure>';
-        dhtml += '<input type="radio" name="media_'+id+'_placards" id="placard_'+id+'_'+gallery[i]+'" value="'+gallery[i]+'"/><label for="placard_'+id+'_'+gallery[i]+'">'+placard_src+'</label>';  
+        dhtml += '<div style="white-space:nowrap; display:inline-block;"><input type="radio" name="media_'+id+'_placards" id="placard_'+id+'_'+gallery[i]+'" value="'+gallery[i]+'"/><label for="placard_'+id+'_'+gallery[i]+'">'+placard_src+'</label></div>';  
 	}
-    $('.program_placards').append(dhtml);
+    $form.find('.media_placards').append(dhtml);
 //after much delib, back here again to create an API call to find the gallery_id
-    $('input:radio[name=media_'+id+'_placards]')[0].checked=true;
+     if(placard_id)
+     {
+      $form.find('.media_placards input:radio[name=media_'+id+'_placards]').filter('[value="'+placard_id+'"]').prop('checked',true);
+     }
     });
   $form = $('#media_extend_'+id); 
-  $form.find('.program_placards').show();
+  $form.find('.media_placards').show();
   });
 }
 
@@ -283,7 +292,7 @@ OB.Media.extendedSave = function()
     item.recording_date = $(element).find('.recording_date_field').val();
     item.tracklist = $(element).find('.tracklist_field').val();
     item.license = $(element).find('.cc_license_select').val();
-    item.placard_id = $(element).find('.program_placards input:checked').val();
+    item.placard_id = $(element).find('.media_placards input:checked').val();
 //cancon
    var mapl_content = '';
    $(element).find('.mapl_class input:checked').each(function(input)

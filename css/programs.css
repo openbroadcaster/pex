@@ -1,23 +1,23 @@
-.program_placards {
+.media_placards {
    width: 100%;
 }
 
-.program_placards input {
+.media_placards input {
    top:1px;
    left:20px;
 }
-.program_placards label {
+.media_placards label {
    width: 120px;
 }
-.program_placards label:after {
+.media_placards label:after {
    content: '';
 }
-.program_placards figure{
+.media_placards figure{
    display:inline-block;
-   float:left;
+   float:left; 
    margin: 10px;
 }
-.program_placards img{
+.media_placards img{
   height:100px;
 }
 #episode_details_table {

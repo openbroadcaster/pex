@@ -132,9 +132,11 @@ class ProgramsModel extends OBFModel
 
   public function programmed_media($id)
    {
-    $this->db->where('media_id',$id);
-    $this->db->what('program_id');
-    $program=$this->db->get_one('programs_media_ids');
+    $this->db->leftjoin('programs_media_ids','programs_media_ids.program_id', 'programs.pid');
+    $this->db->where('programs_media_ids.media_id',$id);
+    $this->db->what('programs.pid','program_id');
+    $this->db->what('programs.title','title');
+    $program=$this->db->get_one('programs');
     if(!$program) return false;
     else return $program;
     
