@@ -73,7 +73,15 @@ class Programs extends OBFController
   public function get_placard()
   {
     $id = $this->data('pid');
-    $placard = $this->ProgramsModel('get_placard',$id);
+    $placard = $this->ProgramsModel('get_gallery_ids',$id);
+    return array(true,"Placard",$placard);
+  }
+
+  public function get_episode_placard()
+  {
+    $pid = $this->data('pid');
+    $id = $this->data('media_id');
+    $placard = $this->ProgramsModel('get_episode_placard',$id,$pid);
     return array(true,"Placard",$placard);
   }
 
@@ -273,5 +281,13 @@ class Programs extends OBFController
     
     if($delete) return array(true,'License deleted.');
     else return array(false,'An unknown error occured while trying to delete the license.');
+  }
+
+  public function programmed()
+  {
+    $id = trim($this->data['id']);
+    $program = $this->ProgramsModel('programmed_media',$id);
+    if($program) return array(true,'Programmed media',$program);
+    else return array (false,'Not programmed');
   }
 }

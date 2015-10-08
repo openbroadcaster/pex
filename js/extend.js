@@ -27,57 +27,6 @@ OB.Media.editPage = (function(){
   };
  }());
 
-OB.Media.editDetails = function(data){
-
-  OB.Media.media_info = new Array(); // reset 
-
-  OB.UI.replaceMain('media/addedit.html');
-  $('#media_heading').text(OB.t('Edit Media','Heading'));
-  $('#media_top_instructions').text(OB.t('Edit Media','Instructions'));
-
-  $('#media_upload_container').hide();
-
-  $('#media_data').show();
-
-
-    var local_id = data.id
-
-    OB.Media.mediaAddeditForm(local_id,$data.title);
-
-    $('#upload_'+local_id+'_data_container').attr('data-id',local_id); // id is ID in database, it being set means we are editing existing data.
-
-    $form = $('.media_addedit').last();
-
-    $form.attr('data-edit',1);
-
-    $form.find('.artist_field').val(data.artist);
-    $form.find('.title_field').val(data-title);
-    $form.find('.album_field').val(data.album);
-    $form.find('.year_field').val(data.year);
-
-    $form.find('.category_field').val(data.category_id);
-    OB.Media.updateGenreList(local_id);
-
-    $form.find('.country_field').val(data.country_id);
-    $form.find('.language_field').val(data.language_id);
-    $form.find('.genre_field').val(data.genre_id);
-
-    $form.find('.comments_field').val(data.comments);
-
-    $form.find('.copyright_field').val(data.is_copyright_owner);
-    $form.find('.status_field').val(data.public_status);
-    $form.find('.dynamic_select_field').val(data.dynamic_select);
-
-    if((data.status)=='approved') $form.find('.approved_field').val(1);
-    else $form.find('.approved_field').val(0);
-
-$('.copy_to_all').addClass('hidden');
-
-  $('.new_media_only').hide();
-
-
-}
-
 OB.Media.extendForm = function(button)
 { 
 //get the HTML 
@@ -104,8 +53,8 @@ OB.Media.extendForm = function(button)
 //set-up MAPL logos
 
 //setup data
+       OB.Media.showGallery(local_id);
      OB.Media.metaFormProcess(local_id);
-
       }); //end of form instance
       }
 	 else  // go back to basics
@@ -122,7 +71,6 @@ OB.Media.extendForm = function(button)
 
 //Hide copy to all for single instance
    if($('.media_addedit').length==1) $('.copy_to_all').addClass('hidden');
-
 //set-up MAPL logo
    $('.cancon_field').click(function(){
      $('#mapl_logo').html('');
@@ -135,53 +83,78 @@ OB.Media.extendForm = function(button)
     });
 
      OB.Media.setMapl();
-
-   OB.UI.widgetHTML( $('#media_data_middle') );
+   
+OB.UI.widgetHTML( $('#media_data_middle') );
    OB.UI.translateHTML( $('#media_data_middle') );
    // one or more elements have visibility depending on permissions. call our update function to adjust this.
    OB.UI.permissionsUpdate(); 
 }
 
-OB.Media.metaFormProcess = function(media_id)
+OB.Media.metaFormProcess = function(media_id) {
+
+    var $form = $('.media_extend[data-id=' + media_id + ']');
+    //fill in fields
+    //Get the data
+    OB.API.post('programs', 'getx', {
+        'id': media_id
+    }, (function(data) {
+        if (data.status == false) return;
+
+        var metadata = data.data;
+        $form.find('.recording_location_field').val(metadata['recording_location']);
+        $form.find('.recording_date_field').val(metadata['recording_date']);
+        $form.find('.tracklist_field').val(metadata['tracklist']);
+        var license = (metadata['license.id']);
+        $form.find('.cc_license').show();
+        $form.find('.cc_license_select').val(metadata['license.id']);
+        $form.find('#' + media_id + '_' + license).show().siblings().hide();
+        $form.find('button.viz_button').text("Hide License");
+        if (metadata['cancon'] && (metadata['cancon']).indexOf('m') >= 0) $form.find('.cancon_field[value=1]').attr('checked', true);
+        if (metadata['cancon'] && (metadata['cancon']).indexOf('a') >= 0) $form.find('.cancon_field[value=2]').attr('checked', true);
+        if (metadata['cancon'] && (metadata['cancon']).indexOf('p') >= 0) $form.find('.cancon_field[value=4]').attr('checked', true);
+        if (metadata['cancon'] && (metadata['cancon']).indexOf('l') >= 0) $form.find('.cancon_field[value=8]').attr('checked', true);
+        OB.Media.setMapl();
+        if (metadata['advisory'] && (metadata['advisory']).indexOf('l') >= 0) $form.find('.language_advisory_field').attr('checked', true);
+        if (metadata['advisory'] && (metadata['advisory']).indexOf('v') >= 0) $form.find('.violence_advisory_field').attr('checked', true);
+        if (metadata['advisory'] && (metadata['advisory']).indexOf('d') >= 0) $form.find('.drug_advisory_field').attr('checked', true);
+        if (metadata['advisory'] && (metadata['advisory']).indexOf('n') >= 0) $form.find('.nudity_advisory_field').attr('checked', true);
+        if (metadata['advisory'] && (metadata['advisory']).indexOf('s') >= 0) $form.find('.sex_advisory_field').attr('checked', true);
+        if (metadata['advisory'] && (metadata['accessibility']).indexOf('c') >= 0) $form.find('.access_caption_field').attr('checked', true);
+        if (metadata['accessibility'] && (metadata['accessibility']).indexOf('s') >= 0) $form.find('.access_sign_field').attr('checked', true);
+        if (metadata['accessibility'] && (metadata['accessibility']).indexOf('d') >= 0) $form.find('.access_described_field').attr('checked', true);
+        //       $form.find('.advisory_field').val(metadata['tracklist']);
+        //       $form.find('.accessibility_field').val(metadata['tracklist']);
+        // add our credits
+        var credits = metadata.credits;
+        for (var j in credits) {
+          OB.Media.detailsAddCredit(credits[j].media_id, credits[j].role_id, credits[j].role + ' : ' + credits[j].name);
+        }
+        $('input:radio[name="media_2_placard"]').filter('[value="9"]').prop('checked',true);
+      //set saved placard
+
+    })); // end of API call
+}
+
+OB.Media.showGallery = function(id)
 {
-
-   var $form = $('.media_extend[data-id='+media_id+']');
-//fill in fields
-//Get the data
-      OB.API.post('programs','getx',{'id':media_id },(function(data){
-       if(data.status==false) return;
-
-       var metadata = data.data;
-       $form.find('.recording_location_field').val(metadata['recording_location']);
-       $form.find('.recording_date_field').val(metadata['recording_date']);
-       $form.find('.tracklist_field').val(metadata['tracklist']);
-       var license = (metadata['license.id']);
-       $form.find('.cc_license').show();
-       $form.find('.cc_license_select').val(metadata['license.id']);
-       $form.find('#'+media_id+'_'+license).show().siblings().hide();
-    $form.find('button.viz_button').text("Hide License");
-       if(metadata['cancon']&&(metadata['cancon']).indexOf('m') >= 0) $form.find('.cancon_field[value=1]').attr('checked',true);
-       if(metadata['cancon']&&(metadata['cancon']).indexOf('a') >= 0) $form.find('.cancon_field[value=2]').attr('checked',true);
-       if(metadata['cancon']&&(metadata['cancon']).indexOf('p') >= 0) $form.find('.cancon_field[value=4]').attr('checked',true);
-       if(metadata['cancon']&&(metadata['cancon']).indexOf('l') >= 0) $form.find('.cancon_field[value=8]').attr('checked',true);
-       OB.Media.setMapl();
-       if(metadata['advisory']&&(metadata['advisory']).indexOf('l') >= 0) $form.find('.language_advisory_field').attr('checked',true);
-       if(metadata['advisory']&&(metadata['advisory']).indexOf('v') >= 0) $form.find('.violence_advisory_field').attr('checked',true);
-       if(metadata['advisory']&&(metadata['advisory']).indexOf('d') >= 0) $form.find('.drug_advisory_field').attr('checked',true);
-       if(metadata['advisory']&&(metadata['advisory']).indexOf('n') >= 0) $form.find('.nudity_advisory_field').attr('checked',true);
-       if(metadata['advisory']&&(metadata['advisory']).indexOf('s') >= 0) $form.find('.sex_advisory_field').attr('checked',true);
-       if(metadata['advisory']&&(metadata['accessibility']).indexOf('c') >= 0) $form.find('.access_caption_field').attr('checked',true);
-       if(metadata['accessibility']&&(metadata['accessibility']).indexOf('s') >= 0) $form.find('.access_sign_field').attr('checked',true);
-       if(metadata['accessibility']&&(metadata['accessibility']).indexOf('d') >= 0) $form.find('.access_described_field').attr('checked',true);
-//       $form.find('.advisory_field').val(metadata['tracklist']);
-//       $form.find('.accessibility_field').val(metadata['tracklist']);
-// add our credits
-       var credits  = metadata.credits;
-       for(var j in credits)
-         {
-          OB.Media.detailsAddCredit(credits[j].media_id,credits[j].role_id,credits[j].role +' : '+ credits[j].name);
-         }
-      })); // end of API call
+  OB.API.post('programs','programmed',{'id':id},function(data){
+   if (data.status == false) return;
+    var program_id=data.data.program_id;
+    OB.API.post('programs','get_placard',{'pid':program_id}, function(results){
+  var gallery = results.data;
+  var dhtml = '';
+  for(var i in gallery)
+	{
+var placard_src ='<figure><img src="preview.php?id='+gallery[i]+'&dl=0&mode=0"/></figure>';
+        dhtml += '<input type="radio" name="media_'+id+'_placards" id="placard_'+id+'_'+gallery[i]+'" value="'+gallery[i]+'"/><label for="placard_'+id+'_'+gallery[i]+'">'+placard_src+'</label>';  
+	}
+    $('.program_placards').append(dhtml);
+//after much delib, back here again to create an API call to find the gallery_id
+    $('input:radio[name=media_'+id+'_placards]')[0].checked=true;
+    });
+  $form = $('#media_extend_'+id); 
+  $form.find('.program_placards').show();
+  });
 }
 
 OB.Media.setMapl = function()
@@ -310,7 +283,7 @@ OB.Media.extendedSave = function()
     item.recording_date = $(element).find('.recording_date_field').val();
     item.tracklist = $(element).find('.tracklist_field').val();
     item.license = $(element).find('.cc_license_select').val();
-
+    item.placard_id = $(element).find('.program_placards input:checked').val();
 //cancon
    var mapl_content = '';
    $(element).find('.mapl_class input:checked').each(function(input)

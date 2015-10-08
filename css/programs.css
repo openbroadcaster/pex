@@ -1,3 +1,25 @@
+.program_placards {
+   width: 100%;
+}
+
+.program_placards input {
+   top:1px;
+   left:20px;
+}
+.program_placards label {
+   width: 120px;
+}
+.program_placards label:after {
+   content: '';
+}
+.program_placards figure{
+   display:inline-block;
+   float:left;
+   margin: 10px;
+}
+.program_placards img{
+  height:100px;
+}
 #episode_details_table {
 width:100%;
 }

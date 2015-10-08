@@ -129,6 +129,17 @@ class ProgramsModel extends OBFModel
 
     return $media_ids;
 }
+
+  public function programmed_media($id)
+   {
+    $this->db->where('media_id',$id);
+    $this->db->what('program_id');
+    $program=$this->db->get_one('programs_media_ids');
+    if(!$program) return false;
+    else return $program;
+    
+  }  
+
   public function get($params)
   {
 
@@ -238,6 +249,12 @@ class ProgramsModel extends OBFModel
     return $media_ids;
   }
 
+  public function get_episode_placard ($pid,$id)
+   {
+    $this->db->where('program_id',$pid);
+    $this-db-where('media_id',$id);
+    $this->db->what('placard_id');
+   }
   public function get_credit_roles($id)
   {
     $this->db->where('program_id',$id);
@@ -655,6 +672,7 @@ public function savex($item)
    $this->db->what('media_meta.cancon','cancon');
    $this->db->what('media_meta.advisory','advisory');
    $this->db->what('media_meta.accessibility','accessibility');
+   $this->db->what('media_meta.placard_id','placard_id');
     $this->db->what('license_attributes.title','license.title');
     $this->db->what('license_attributes.id','license.id');
    $this->db->leftjoin('license_attributes','media_meta.license','license_attributes.id');
