@@ -18,6 +18,7 @@
 */
 
 OBModules.Programs = new Object();
+OBModules.Programs.defaultPlacard = new Array();
 
 /* Manager Page */
 
@@ -93,7 +94,6 @@ OBModules.Programs.themeList = function(data)
         if(program_id != 'new') $form.find('.program_details_theme').val(data.theme_id);
    });
 }
-OBModules.Programs.defaultPlacard = new Array();
 OBModules.Programs.setDefault = function(id)
 {
        var $result= '';

@@ -21,7 +21,7 @@ OBModules.Programs.detailsPage = function(pid)
 {
 
   OB.UI.replaceMain('modules/programs/details.html');
-
+  OBModules.Programs.setDefault(pid);
   OB.API.post('programs', 'get_program', { 'pid': pid }, function(data) {
   
     if(data.status==false) { $('#program_details_message').text(OB.t('Program Details','Program not found')); return; }
@@ -41,7 +41,6 @@ OBModules.Programs.detailsPage = function(pid)
 //      $('#program_details_owner').text(progdata.owner_name);
       $('#program_details_keywords').text(progdata.keywords);
       $('#program_details_keywords').addClass('capitalize');
-
       //handle program credits
 
         var credits = progdata.credits;
@@ -64,10 +63,9 @@ OBModules.Programs.detailsPage = function(pid)
           else 
           {
            var episode_date=episode.recording_date;
+           var def_placard = OBModules.Programs.defaultPlacard;
            if(episode.placard_id==false || !episode.placard_id)
            {
-           OBModules.Programs.setDefault(progdata.pid);
-           var def_placard=OBModules.Programs.defaultPlacard;
            var placard_src ='<img height="50px;" src="preview.php?id='+def_placard+'&dl=0&mode=0"/>';
            } else {
 	    var placard_src = '<img height="50px;" src="preview.php?id='+episode.placard_id+'&dl=0&mode=0"/>';
