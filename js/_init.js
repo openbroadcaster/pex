@@ -93,10 +93,12 @@ OBModules.Programs.themeList = function(data)
         if(program_id != 'new') $form.find('.program_details_theme').val(data.theme_id);
    });
 }
-OBModules.Programs.defaultPlacard = function(id)
+OBModules.Programs.defaultPlacard = new Array();
+OBModules.Programs.setDefault = function(id)
 {
+       var $result= '';
        OB.API.post('programs','get_program_placard',{'pid':id},function(response){
-       var result = response.data['media_id'];
-       return result;
+       $result= response.data['media_id'];
+       OBModules.Programs.defaultPlacard=$result;
        });
 }

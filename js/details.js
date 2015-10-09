@@ -66,7 +66,9 @@ OBModules.Programs.detailsPage = function(pid)
            var episode_date=episode.recording_date;
            if(episode.placard_id==false || !episode.placard_id)
            {
-           var placard_src =''
+           OBModules.Programs.setDefault(progdata.pid);
+           var def_placard=OBModules.Programs.defaultPlacard;
+           var placard_src ='<img height="50px;" src="preview.php?id='+def_placard+'&dl=0&mode=0"/>';
            } else {
 	    var placard_src = '<img height="50px;" src="preview.php?id='+episode.placard_id+'&dl=0&mode=0"/>';
            }
