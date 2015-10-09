@@ -11,7 +11,7 @@ Additional features planned or in development:
 * assemble Playlist as Program episode (mp3 format)
 * watchlist for monitoring Program updates (favourites)
 
-
+![alt tag](https://github.com/openbroadcaster/PEX/blob/master/PEX.png)
 
 Jeff Hamm
 @geoplanet
