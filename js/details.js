@@ -38,7 +38,7 @@ OBModules.Programs.detailsPage = function(pid)
       var content_advisory='no';
       if(progdata.explicit_flag==1) (content_advisory = 'yes');
       $('#program_details_advisory').text(content_advisory);
-      $('#program_details_owner').text(progdata.owner_name);
+//      $('#program_details_owner').text(progdata.owner_name);
       $('#program_details_keywords').text(progdata.keywords);
       $('#program_details_keywords').addClass('capitalize');
 

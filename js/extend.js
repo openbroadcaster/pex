@@ -98,7 +98,11 @@ OB.Media.metaFormProcess = function(media_id) {
     OB.API.post('programs', 'getx', {
         'id': media_id
     }, (function(data) {
-        if (data.status == false) return;
+        if(data.data == false)
+	{ 
+	  OB.Media.showGallery(media_id);  
+	  return;
+	} else {
 
         var metadata = data.data;
         $form.find('.recording_location_field').val(metadata['recording_location']);
@@ -132,6 +136,7 @@ OB.Media.metaFormProcess = function(media_id) {
       //set saved placard
 
        OB.Media.showGallery(metadata.id,metadata.placard_id);
+       }
     })); // end of API call
 }
 

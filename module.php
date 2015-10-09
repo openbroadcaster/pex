@@ -133,6 +133,7 @@ class ProgramsModule extends OBFModule
   	`cancon` char(4),
   	`advisory` char(5),
   	`accessibility` char(3),
+        `placard_id` varchar(16), 
   	KEY `meta_id` (`id`)
   	) ENGINE=MyISAM DEFAULT CHARSET=latin1 ;'
 	);

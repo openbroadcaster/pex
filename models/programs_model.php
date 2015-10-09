@@ -688,7 +688,7 @@ public function savex($item)
    $this->db->leftjoin('license_attributes','media_meta.license','license_attributes.id');
    $this->db->where('media_meta.id',$id);
    $result = $this->db->get_one('media_meta');
-
+   if(!$result) return false;
     // get our  credits
     $result['credits']=array();
     $roles = $this('get_media_roles',$id); //role and name
@@ -700,5 +700,5 @@ public function savex($item)
       if($credit) $result['credits'][]=$credit;
      }
    return $result;
-   }
+  }
 }
