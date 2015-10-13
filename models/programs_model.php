@@ -144,7 +144,7 @@ class ProgramsModel extends OBFModel
     $episode_ids = $this->db->get('programs_media_ids');
     $media_ids = array();
     
-    foreach($episode_ids as $episode_id) $media_ids[]=$episode_id['recording_location'];
+    foreach($episode_ids as $episode_id) $media_ids[]=$episode_id['recording_date'];
 
     return $media_ids;
 }
