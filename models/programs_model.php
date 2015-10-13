@@ -97,6 +97,9 @@ class ProgramsModel extends OBFModel
       {
         $result['credits'][]=$role;
       }
+     //get latest episode
+     $latest = $this('get_latest_episodes',$row['pid']);
+     $result['latest_episode'] = $latest;
    }
    return $result;
   }
@@ -107,6 +110,22 @@ class ProgramsModel extends OBFModel
     return $this->db->get('programs');
 
   }
+
+   public function set_latest_episode($id)
+  {
+   $this->db->query('select programs_media_ids.program_id,programs_media_ids.media_id,max(recording_date) as latest_episode from media_meta left join programs_media_ids on programs_media_ids.media_id=media_meta.id where program_id ='.$id.' group by program_id;');
+
+  $rows = $this->db->assoc_list();
+  if($rows)  return $this->db->query('update programs set latest_episode=2 where pid=1;');
+  }
+   public function get_latest_episodes($id)
+  {
+   $this->db->query('select programs_media_ids.program_id,programs_media_ids.media_id,max(recording_date) as latest_episode from media_meta left join programs_media_ids on programs_media_ids.media_id=media_meta.id where program_id ='.$id.' group by program_id;');
+
+  $rows = $this->db->assoc_list();
+  if($rows) return $rows;
+  }
+
   public function get_episode($params)
 {
     foreach($params as $name=>$value) $$name=$value;
@@ -207,7 +226,9 @@ class ProgramsModel extends OBFModel
       {
         $result[$index]['credits'][]=$role;
       }
-
+     //get latest episode
+     $latest = $this('get_latest_episodes',$row['pid']);
+     $result[$index]['latest_episode'] = $latest;
     }
     return $result;
   }

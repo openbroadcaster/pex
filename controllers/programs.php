@@ -69,6 +69,12 @@ class Programs extends OBFController
     $episodes = $this->ProgramsModel('get_episode',$params);
     return array(true,"Episodes",$episodes);
   }
+  public function latest_episode()
+   {
+    $id = $this->data('pid');
+    $episodes = $this->ProgramsModel('get_latest_episodes',$id);
+    return array(true,"Most Recent Episodes",$episodes);
+   }
 
   public function get_placard()
   {
