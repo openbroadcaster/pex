@@ -1,7 +1,7 @@
 1. Copy all files into module/programs directory.
-2. Log into Openbroadcast Server as user with admin privileges
+2. Log into Openbroadcast Server as user with admin privileges.
 3. From admin->modules menu, install Program Manager module.
-4. Refresh browser to update GUI
-5. New sidebar tab and media menu options for managing program metadata
-6. New admin menu items for themes, credits and licensing 
+4. Refresh browser to update GUI.
+5. New sidebar tab and media menu options for managing program metadata.
+6. New admin menu items for themes, credits and licensing. To populate the license options with Creative Commons licensing, use db/license.sql (i.e. mysql -u user -p pwd mydb<license.sql).  
 7. To assign placards to media, first drag images onto Program Gallery. Assign media to Program. Program images will be shown as alternative placards in the Extended Media editor
