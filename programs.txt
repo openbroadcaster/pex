@@ -1,0 +1,59 @@
+Program Manager
+
+  Heading: Program Manager
+  Edit Program: Edit Program
+  Form Heading: Program Details
+  Introduction: Expand program list entries to view or edit details.
+  Instructions: Fill out the following program information, then drag gallery images and episode media items into the zones indicated below.
+  New Program: Add New Program
+  New Program Button: Add New Program
+  Title: Title
+  Producer:Producer
+  Description: Summary
+  ID : PID
+  Gallery Drag Zone:Drag Images(media) Here
+  Media Drag Zone: Drag Episodes(media) Here
+  Credits: Credits
+  Add Credit: Add Credit
+  Category: Category
+  Genre: Genre
+  Link: Web Link
+  Placards: Program Art
+  Episodes: Episodes
+  Clear Field Button: Clear 
+  # of Episodes: # of Episodes 
+
+Program Settings
+
+  Heading: Program Settings
+  Instructions: Add roles for credits dropdown.
+  Add Role Button: Add Role
+  Add Theme Button: Add Theme 
+
+Program Delete
+  Delete Program: Delete Programs
+  At least one delete: Please select at least one program from the list
+  Program Deletion: Media files for these programs will NOT be deleted.
+  Are You Sure: Are you sure you want to delete the following programs? 
+  Programs have been deleted: Programs have been deleted!
+
+Program Details
+
+Program Sidebar
+  My Filter Link: My
+
+Extended Media
+  Extended Media Details: Extended Metadata
+  Recording Location: Recorded at
+  Recording Date: Recording Date
+  Show Extended Details: Advanced
+  Show Basic Details: Basic
+  Theme: Theme
+  Add Credits: Add Credits
+  Credits: Credits
+  Show License Description: Show License
+  Credits Instructions: Select a role and provide a name, then click Add to add to the credits list.
+  Role: Role
+  Name: Name
+  Copyright: License Copyright
+  Copy Field Button: Copy To All
