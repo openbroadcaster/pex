@@ -35,6 +35,8 @@ class ProgramsModel extends OBFModel
     $this->db->what('programs.updated','updated');
     $this->db->what('programs.explicit_flag','explicit_flag');
     $this->db->what('programs.dynamic_select','dynamic_select');
+    $this->db->what('programs.latest_media','latest_media');
+    $this->db->what('programs.duration','duration');
     $this->db->what('users.display_name','owner_name');
     $this->db->leftjoin('program_themes','program_themes.id','programs.theme_id');
     $this->db->leftjoin('media_languages','programs.language_id','media_languages.id');
@@ -116,8 +118,14 @@ class ProgramsModel extends OBFModel
    $this->db->query('select programs_media_ids.program_id,programs_media_ids.media_id,max(recording_date) as latest_episode from media_meta left join programs_media_ids on programs_media_ids.media_id=media_meta.id where program_id ='.$id.' group by program_id;');
 
   $rows = $this->db->assoc_list();
-  if($rows)  return $this->db->query('update programs set latest_episode=2 where pid=1;');
+
+  if($rows) 
+   { 
+    $foo = $rows[0]['media_id']; 
+    return $this->db->query('UPDATE programs SET latest_media='.$foo.' WHERE pid='.$id.';');
+   }
   }
+
    public function get_latest_episodes($id)
   {
    $this->db->query('select programs_media_ids.program_id,programs_media_ids.media_id,max(recording_date) as latest_episode from media_meta left join programs_media_ids on programs_media_ids.media_id=media_meta.id where program_id ='.$id.' group by program_id;');
@@ -630,8 +638,9 @@ class ProgramsModel extends OBFModel
         $this->db->insert('programs_media_ids',$episode_id_data);
 
       }
+       $latest=$this('set_latest_episode',$id);
     }
-
+   
 
     return true;
 

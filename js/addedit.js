@@ -123,6 +123,21 @@ for(var i in $tagwords)
     $form.find('#program_details_title').val(data.title);
     $form.find('#program_details_producer').val(data.producer);
     $form.find('#program_details_summary').val(data.summary);
+//set duration fields
+        var duration_tmp = data.duration;
+        var duration_seconds = duration_tmp%60;
+        duration_tmp = (duration_tmp-duration_seconds)/60;
+        var duration_minutes = duration_tmp%60;
+        duration_tmp = (duration_tmp-duration_minutes)/60;
+        var duration_hours = duration_tmp%24;
+        var duration_days = (duration_tmp - duration_hours)/24;
+
+        $form.find('#program_duration_days').val(timepad(duration_days));
+        $form.find('#program_duration_hours').val(timepad(duration_hours));
+        $form.find('#program_duration_minutes').val(timepad(duration_minutes));
+        $form.find('#program_duration_seconds').val(timepad(duration_seconds));
+
+
     $form.find('.program_details_theme').val(data.theme_id);
     $form.find('#program_details_linkurl').val(data.link_url);
     $form.find('.program_details_country').val(data.country_id);
@@ -472,7 +487,10 @@ OBModules.Programs.programSave = function(program_id)
   var program_language_id = $form.find('.program_details_language').val();
   var program_content_advisory = $form.find('.content_advisory_flag').val();
   var program_dynamic_select = $form.find('.program_dynamic_select').val();
-  
+  var duration_days = $form.find('#program_duration_days').val();
+  var duration_hours = $form.find('#program_duration_hours').val();
+  var duration_minutes = $form.find('#program_duration_minutes').val();
+  var duration_seconds = $form.find('#program_duration_seconds').val(); 
 // get keywords 
   var keywords = new Array();
   keywords = $form.find('.keyword_list').tagEditor('getTags')[0].tags;
@@ -506,7 +524,7 @@ OBModules.Programs.programSave = function(program_id)
 
   if(program_id == 'new') program_id = false;
 
-  OB.API.post('programs','edit', { 'pid': program_id, 'title': program_title, 'producer': program_producer, 'summary': program_summary,'link_url': program_link_url, 'theme_id': program_theme_id, 'language_id': program_language_id, 'country_id': program_country_id, 'content_advisory': program_content_advisory, 'dynamic_select': program_dynamic_select,'keywords': keywords, 'episode_ids': program_episode_ids, 'gallery_ids': program_gallery_ids, 'credit_roles': credits}, function(data) {
+  OB.API.post('programs','edit', { 'pid': program_id, 'title': program_title, 'producer': program_producer, 'summary': program_summary, 'duration_days': duration_days,'duration_hours': duration_hours, 'duration_minutes': duration_minutes, 'duration_seconds': duration_seconds, 'link_url': program_link_url, 'theme_id': program_theme_id, 'language_id': program_language_id, 'country_id': program_country_id, 'content_advisory': program_content_advisory, 'dynamic_select': program_dynamic_select,'keywords': keywords, 'episode_ids': program_episode_ids, 'gallery_ids': program_gallery_ids, 'credit_roles': credits}, function(data) {
 
     if(!program_id) program_id = 'main'; // we want to manipulate the main message for new programs.
 

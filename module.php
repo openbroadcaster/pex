@@ -48,7 +48,8 @@ class ProgramsModule extends OBFModule
           `updated` int(10) unsigned NOT NULL,
           `explicit_flag` tinyint(1) NOT NULL DEFAULT  0,
           `dynamic_select` tinyint(1) NOT NULL DEFAULT 1,
-          `latest_episode` int(11) DEFAULT NULL,
+          `latest_media` int(11) DEFAULT NULL,
+          `program_duration` decimal(10,3) DEFAULT NULL,
         PRIMARY KEY (`pid`),
         KEY `module_program_manager_ibfk_1` (`producer`),
         KEY `module_program_manager_ibfk_2` (`title`)

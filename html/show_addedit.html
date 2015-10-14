@@ -1,22 +1,62 @@
-<div data-tns="Program Manager">
-<h2 id="edit_heading" class="hidden" data-t data-tns="Program Manager">Edit Program</h2>
-<div class="program_details_form">
- <fieldset>
-  <legend id="program_details_heading" data-t data-tns="Program Manager">Form Heading</legend>
-<p id="new_programs_intro" data-t data-tns="Program Manager">Instructions</p>
-  <div class="fieldrow">
-   <label class="required" data-t data-tns="Program Manager">Title</label>
-   <input type="text" id="program_details_title">
-  </div>
+<div id="show_addedit_form" data-tns="Schedule Edit">
 
-  <div class="fieldrow">
-   <label class="required" data-t data-tns="Program Manager">Description</label>
-   <input type="text" id="program_details_summary">
-  </div>
+<p data-t>Show Instructions</p>
+
+<obwidget type="message" id="show_addedit_message"></obwidget>
+
+<fieldset>
+<legend data-t>Show Heading</legend>
+
+<div class="fieldrow">
+  <label class="required" data-t>Item Name</label>
+  <span id="show_item_info"></span>
+</div>
+
+<div class="fieldrow">
+  <label class="required" data-t>Program Mode</label>
+  <select id="program_mode">
+    <option value="latest" data-t>Most Recent</option>
+    <option disabled value="series" data-t>Series</option>
+    <option disabled value="random" data-t>Random</option>
+  </select>
+</div>
+
+<div class="fieldrow">
+  <label class="required" data-t>Timeslot</label>
+  <select onchange="OB.Schedule.addeditShowWindowTimeslotChange();" id="show_time_slot"><option id="timeslot_manual_input_option" data-t>Manual Input Option</option></select>
+</div>
+
+<div class="fieldrow">
+  <label class="required" data-t>Scheduling Mode</label>
+  <select id="show_mode">
+    <option value="once" data-t>One-Time Option</option>
+    <option value="daily" data-t>Daily Option</option>
+    <option value="weekly" data-t>Weekly Option</option>
+    <option value="monthly" data-t>Monthly Option</option>
+    <option value="xdays" data-t>Every X Days Option</option>
+    <option value="xweeks" data-t>Every X Weeks Option</option>
+    <option value="xmonths" data-t>Every X Months Option</option>
+  </select>
+</div>
+
+<div class="fieldrow hidden" id="show_addedit_x_data">
+  <label class="required" data-t>Recurring Every</label>
+  <input type="text" id="show_x_data" size="3"> <span id="show_addedit_x_data_interval"></span>
+</div>
+
+<div class="fieldrow">
+  <label class="required" data-t>Start Date</label>
+  <input size="15" type="text" id="show_start_date">
+</div>
+
+<div class="fieldrow">
+  <label class="required" data-t>Start Time</label>
+  <input size="15" type="text" id="show_start_time">
+</div>
 
 <div class="fieldrow">
   <label class="required" data-t>Duration</label>
-  <select name="program_duration_days" id="program_duration_days">
+  <select name="show_duration_days" id="show_duration_days">
     <option>00</option> 
     <option>01</option> 
     <option>02</option>
@@ -52,7 +92,7 @@
 </div>
 <div class="fieldrow">
   <label class="empty"></label>
-  <select name="program_duration_hours" id="program_duration_hours">
+  <select name="show_duration_hours" id="show_duration_hours">
     <option>00</option> 
     <option>01</option> 
     <option>02</option>
@@ -81,7 +121,7 @@
 </div>
 <div class="fieldrow">
   <label class="empty"></label>
-  <select name="program_duration_minutes" id="program_duration_minutes">
+  <select name="show_duration_minutes" id="show_duration_minutes">
     <option>00</option> 
     <option>01</option> 
     <option>02</option>
@@ -146,7 +186,7 @@
 </div>
 <div class="fieldrow">
   <label class="empty"></label>
-  <select name="program_duration_seconds" id="program_duration_seconds">
+  <select name="show_duration_seconds" id="show_duration_seconds">
     <option>00</option> 
     <option>01</option> 
     <option>02</option>
@@ -210,70 +250,29 @@
   </select> <span data-t>Duration Seconds</span>
 </div>
 
-  <div class="fieldrow">
-    <label data-t data-tns="Program Manager" class="required">Theme</label>
-    <select class="program_details_theme"></select>
-  </div>
+<div class="fieldrow hidden" id="show_addedit_stop">
+  <label class="required" data-t>Recurring Last Date</label>
+  <input size="15" type="text" id="show_stop_date">
+</div>
 
-  <div class="fieldrow">
-   <label data-t data-tns="Program Manager" >Keywords</label>
-    <input class="keyword_list" type="text">
-    <button class="clear_all" onclick="OBModules.Programs.clearTags(this);" data-t data-tns="Program Manager" >Clear Field Button</button>
-  </div>
+</fieldset>
 
-  <div class="fieldrow">
-   <label data-t data-tns="Program Manager">Producer</label>
-   <input type="text" id="program_details_producer">
-  </div>
+<fieldset>
 
-  <div class="fieldrow program_credits_add">
-   <label data-t data-tns="Program Manager">Add Credit</label>
-   <select id="credit_roles"><option value="" disabled>Select Role---</option></select>
-   <input type="text" id="credit_role_add_name" placeholder="name(s)">
-  </div>
+<div class="fieldrow">
+  <button class="add" alue="Save" id="item_properties_save" onclick="OB.Schedule.saveShow();" data-t data-tns="Common">Save</button>
+  <button class="delete edit_only" id="item_properties_delete" onclick="OB.Schedule.deleteShow();" data-t data-tns="Common">Delete</button>
+  <button id="item_properties_cancel" onclick="OB.UI.closeModalWindow();" data-t data-tns="Common">Cancel</button>
+</div>
 
-  <div class=fieldrow program_credits_row">
-   <label data-t data-tns="Program Manager">Credits</label>
-   <div class="program_credits" ><span class="program_credit" data-t data-tns="Program Manager">Credits</span></div>
-  </div>
 
-  <div class="fieldrow program_gallery_media_ids_row">
-   <label data-t data-tns="Program Manager">Placards</label>
-   <div class="droppable_target_media program_gallery_media_ids"><span class="program_gallery_media" data-t data-tns="Program Manager">Gallery Drag Zone</span></div>
-  </div>
 
-  <div class="fieldrow program_episode_media_ids_row">
-   <label data-t data-tns="Program Manager">Episodes</label>
-   <div class="droppable_target_media program_episode_media_ids"><span class="program_episode_media" data-t data-tns="Program Manager">Media Drag Zone</span></div>
-  </div>
+<input type="hidden" id="show_item_type" value="">
+<input type="hidden" id="show_item_id" value="">
 
-  <div class="fieldrow">
-   <label data-t data-tns="Program Manager">Origin</label>
-   <select class="program_details_country"></select>
-  </div>
+<input type="hidden" id="show_id" value="">
+<input type="hidden" id="show_edit_recurring" value="0">
 
-  <div class="fieldrow">
-   <label data-t data-tns="Program Manager">Language</label>
-   <select class="program_details_language"></select>
-  </div>
+</fieldset>
 
-  <div class="fieldrow">
-   <label data-t data-tns="Program Manager">Content Advisory</label>
-   <select class="content_advisory_flag"><option value="1" data-t data-tns="Common">Yes</option><option value="0" data-t data-tns="Common">No</option></select>
-  </div>
-
-  <div class="fieldrow">
-   <label data-t data-tns="Program Manager">Dynamic Selection</label>
-   <select class="program_dynamic_select"><option value="1" data-t data-tns="Common">Yes</option><option value="0" data-t data-tns="Common">No</option></select>
-  </div>
-
-  <div class="fieldrow">
-   <label data-t data-tns="Program Manager">Link</label>
-   <input type="text" id="program_details_linkurl">
-  </div>
-  <div class="fieldrow">
-   <label class="empty"></label>
-  </div>
-
- </fieldset>
 </div>

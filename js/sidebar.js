@@ -16,61 +16,6 @@
     You should have received a copy of the GNU Affero General Public License
     along with OpenBroadcaster Server.  If not, see <http://www.gnu.org/licenses/></a>.
 */
-//Schedule mods
-OB.Schedule.schedule = (function(){
-   var cached_function = OB.Schedule.schedule;
-   return function(){
-   var result = cached_function.apply(this.arguments);
-   $('#schedule_container').addClass('droppable_target_program');
-$('#schedule_container').droppable({
-      drop: function(event, ui) {
-        if($(ui.draggable).attr('data-mode')=='media')
-        {         
-
-          if($('.sidebar_search_media_selected').length!=1) { OB.UI.alert(['Schedule','Schedule Only One']); return; }
-
-          var item_type = 'media';
-          var item_id = $('.sidebar_search_media_selected').first().attr('data-id');
-          var item_name = $('.sidebar_search_media_selected').first().attr('data-artist')+' - '+$('.sidebar_search_media_selected').first().attr('data-title');
-        }
-
-        else if($(ui.draggable).attr('data-mode')=='playlist')
-        {
-
-          if($('.sidebar_search_playlist_selected').length!=1) { OB.UI.alert(['Schedule','Schedule Only One']); return; }
-
-          var item_type = 'playlist';
-          var item_id = $('.sidebar_search_playlist_selected').first().attr('data-id');
-          var item_name = $('.sidebar_search_playlist_selected').first().attr('data-name');
-
-        }
-
-       else if($(ui.draggable).attr('data-mode')=='program')
-        {
-
-          if($('.sidebar_search_program_selected').length!=1) { OB.UI.alert(['Schedule','Schedule Only One']); return; }
-
-          var item_type = 'program';
-          var item_id = $('.sidebar_search_program_selected').first().attr('data-pid');
-          var item_name = $('.sidebar_search_program_selected').first().attr('data-title');
-
-          OB.UI.alert(['Schedule','Coming soon: Schedule the latest/random episodes for '+item_name+' !']);  
-          return;
-        }
-
-        else return; // media_dynamic not supported yet.
-
-        var item_duration = $('.sidebar_search_media_selected').first().attr('data-duration');
-
-        OB.Schedule.addShowWindow(item_type,item_id,item_name,item_duration);
-
-      }
-
-    });
-    return result;
-    };
- }());
-
 //Sidebar mods
 OB.Sidebar.contextMenuDetailsPage = function(id)
 {
@@ -368,6 +313,8 @@ OB.Sidebar.programSearch = function(pagination)
       $('#sidebar_search_program_result_'+programs[i]['pid']).attr('data-pid', programs[i]['pid']);
       $('#sidebar_search_program_result_'+programs[i]['pid']).attr('data-title', programs[i]['title']);
       $('#sidebar_search_program_result_'+programs[i]['pid']).attr('data-summary', programs[i]['summary']);
+      $('#sidebar_search_program_result_'+programs[i]['pid']).attr('data-duration', programs[i]['duration']);
+      $('#sidebar_search_program_result_'+programs[i]['pid']).attr('data-latest', programs[i]['latest_media']);
       $('#sidebar_search_program_result_'+programs[i]['pid']).attr('data-link_url', programs[i]['link_url']);
       $('#sidebar_search_program_result_'+programs[i]['pid']).attr('data-owner_id', programs[i]['owner_id']);
 

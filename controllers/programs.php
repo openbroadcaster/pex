@@ -76,6 +76,13 @@ class Programs extends OBFController
     return array(true,"Most Recent Episodes",$episodes);
    }
 
+  public function set_latest_episode()
+   {
+    $id = $this->data('pid');
+    $episode = $this->ProgramsModel('set_latest_episode',$id);
+    return array(true,"Update Most Recent Episode",$episode);
+   }
+
   public function get_placard()
   {
     $id = $this->data('pid');
@@ -145,6 +152,14 @@ class Programs extends OBFController
     $data['dynamic_select'] = $this->data('dynamic_select');
     $validation = $this->ProgramsModel('validate',$data,$id);
     if($validation[0]==false) return $validation;
+    // generate our duration in seconds.
+    $duration = 0;
+    $duration += $this->data('duration_seconds');
+    $duration += 60 * $this->data('duration_minutes');
+    $duration += 60 * 60 * $this->data('duration_hours');
+    $duration += 60 * 60 * 24 * $this->data('duration_days');
+    if(empty($duration)) return array(false, ['Program Edit','Duration Not Valid']);
+    $data['duration']=$duration;
     $this->ProgramsModel('save',$data,$id);
     return array(true,['Programs Manager','Saved Message', $id]);
   }
