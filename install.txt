@@ -4,3 +4,4 @@
 4. Refresh browser to update GUI
 5. New sidebar tab and media menu options for managing program metadata
 6. New admin menu items for themes, credits and licensing 
+7. To assign placards to media, first drag images onto Program Gallery. Assign media to Program. Program images will be shown as alternative placards in the Extended Media editor
