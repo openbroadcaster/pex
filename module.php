@@ -49,7 +49,7 @@ class ProgramsModule extends OBFModule
           `explicit_flag` tinyint(1) NOT NULL DEFAULT  0,
           `dynamic_select` tinyint(1) NOT NULL DEFAULT 1,
           `latest_media` int(11) DEFAULT NULL,
-          `program_duration` decimal(10,3) DEFAULT NULL,
+          `duration` decimal(10,3) DEFAULT NULL,
         PRIMARY KEY (`pid`),
         KEY `module_program_manager_ibfk_1` (`producer`),
         KEY `module_program_manager_ibfk_2` (`title`)
@@ -186,14 +186,16 @@ class ProgramsModule extends OBFModule
 
         public function uninstall()
         {
+/* mysqldump -u pex -p pex_openbroadcaster_pro credit_roles gallery_media_ids license_attributes media_credit_roles media_meta program_keywords program_themes programs programs_credit_roles programs_media_ids media>programs.sql
+*/
         $this->db->where('name','view_programs');
         $this->db->delete('users_permissions');
         $this->db->where('name','manage_programs');
         $this->db->delete('users_permissions');
-/*
+
         $this->db->query('DROP TABLE `program_keywords`;');
         $this->db->query('DROP TABLE `program_themes`;');
-     //   $this->db->query('DROP TABLE `license_attributes`;');
+        $this->db->query('DROP TABLE `license_attributes`;');
         $this->db->query('DROP TABLE `programs_credit_roles`;');
         $this->db->query('DROP TABLE `media_credit_roles`;');
         $this->db->query('DROP TABLE `credit_roles`;');
@@ -201,7 +203,7 @@ class ProgramsModule extends OBFModule
         $this->db->query('DROP TABLE `gallery_media_ids`;');
         $this->db->query('DROP TABLE `media_meta`;');
         $this->db->query('DROP TABLE `programs`;');
-*/
+
       return true;
 
        }
