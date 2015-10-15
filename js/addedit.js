@@ -62,15 +62,16 @@ OBModules.Programs.detailsFormProcess = function(data)
 //        alert('ding dong');
         if($(ui.draggable).attr('data-mode')=='media')
         {
-          if($(ui.draggable).attr('data-type')=='image')
-          {
-           OBModules.Programs.galleryAddMediaId(program_id,$(ui.draggable).attr('data-id'),$(ui.draggable).attr('data-title'));
-          } else
-	  {
-	  }
+           $('.sidebar_search_media_selected').each(function(index,element) {
+             if($(ui.draggable).attr('data-type')=='image')
+             {
+               OBModules.Programs.galleryAddMediaId(program_id,$(element).attr('data-id'),$(element).attr('data-title'));
+             } else
+	    {
+	    }
+          });
         }
       }
-
   });
 
   // establish drop target for episodes (media IDs)  
@@ -81,7 +82,9 @@ OBModules.Programs.detailsFormProcess = function(data)
 //        alert('ding dong');
         if($(ui.draggable).attr('data-mode')=='media') 
         {
-          OBModules.Programs.detailsAddMediaId(program_id,$(ui.draggable).attr('data-id'),$(ui.draggable).attr('data-artist')+' - '+$(ui.draggable).attr('data-title'));  
+         $('.sidebar_search_media_selected').each(function(index,element) {
+          OBModules.Programs.detailsAddMediaId(program_id,$(element).attr('data-id'),$(element).attr('data-artist')+' - '+$(element).attr('data-title'));  
+         });
         }
       }
   });
