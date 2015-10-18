@@ -329,7 +329,6 @@ OBModules.Programs.assemblePlaylist = function(program_id,playlist_id,playlist_t
           queue_item.push(playlist_items[j]['id']);
           queue_item.push(playlist_items[j]['title']);
           queue.push(queue_item);
-	  el += playlist_items[j]['title'] + ':  '+ playlist_items[j]['duration']+'\n';  
         total_duration = +total_duration + +playlist_items[j]['duration'];
 	} else
 	{
@@ -339,7 +338,6 @@ OBModules.Programs.assemblePlaylist = function(program_id,playlist_id,playlist_t
         queue_item.push(playlist_items[j]['dynamic_query']);
         queue_item.push(playlist_items[j]['dynamic_num_items']);
         queue.push(queue_item);
-	el += playlist_items[j]['dynamic_name'] + ':  '+ playlist_items[j]['dynamic_duration']+'*\n';  
 
 	}
 	}
@@ -368,7 +366,7 @@ OBModules.Programs.assemblePlaylist = function(program_id,playlist_id,playlist_t
          $('#showparts').append('<li>'+queue[j][2]+'</li>'); 
          }
         }
-       setTimeout(function(){OB.UI.closeModalWindow()},10000);
+       setTimeout(function(){OB.UI.closeModalWindow()},4000);
      });
  }
 
@@ -399,7 +397,7 @@ OBModules.Programs.getSelection = function(q,n) {
        shuffle(dyn_parts);
        for(var k = 0; k< $num_items; k++)
         {
-         $('#showparts').append('<li>'+dyn_parts[k].filename+'</li>'); 
+         $('#showparts').append('<li>'+dyn_parts[k].artist+'-'+dyn_parts[k].title+'</li>'); 
         }
      });
 }
