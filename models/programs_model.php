@@ -731,4 +731,57 @@ public function savex($item)
      }
    return $result;
   }
+
+  public function dynamic_program_selection($search_query)
+  {
+    $search_query = (array) $search_query; // convert to array (might come in as object with json_decode)
+    $where = array();
+    // simple mode
+  if($search_query['mode']=='simple') $where[] = '(artist like "%'.$this->db->escape($search_query['string']).'%" or title like "%'.$this->db->escape($search_query['string']).'%") and is_approved = 1 and is_archived = 0';
+    // advanced mode.  Filters should be already validated!
+    else
+    {
+      $filters = $search_query['filters'];
+      
+      foreach($filters as $filter)
+      {
+        $filter = (array) $filter;
+        // our possible column (mappings)
+        $column_array = array();
+        $column_array['artist']='artist';
+        $column_array['title']='title';
+        $column_array['album']='album';
+        $column_array['year']='year';
+        $column_array['type']='media.type';
+        $column_array['category']='category_id';
+        $column_array['country']='country_id';
+        $column_array['language']='language_id';
+        $column_array['genre']='genre_id';
+        $column_array['duration']='duration';
+        $column_array['comments']='comments';
+        // our possibile comparison operators
+        $op_array = array();
+        $op_array['like'] = 'LIKE';
+        $op_array['not_like'] = 'NOT LIKE';
+        $op_array['is'] = '=';
+        $op_array['not'] = '!=';
+        $op_array['gte'] = '>=';
+        $op_array['lte'] = '<=';
+        // put together our query segment
+        $tmp_sql = $column_array[$filter['filter']] .' '. $op_array[$filter['op']] . ' "';
+        
+        if($filter['op']=='like' || $filter['op']=='not_like') $tmp_sql .= '%';
+  
+        $tmp_sql .= $this->db->escape($filter['val']);
+        if($filter['op']=='like' || $filter['op']=='not_like') $tmp_sql .= '%';
+        $tmp_sql.='"';
+        $where[]=$tmp_sql;
+      }
+    }
+     $this->db->orderby('id','desc');
+     $result = $this->db->query('select * from media where '.implode(' AND ',$where));
+     $result = $this->db->assoc_list();
+      return $result;
+  }
+
 }

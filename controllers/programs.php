@@ -318,4 +318,13 @@ class Programs extends OBFController
     if($program) return array(true,'Programmed media',$program);
     else return array (false,'Not programmed');
   }
+
+ public function get_dynamic_selections()
+{
+   $q = json_decode($this->data['q']);
+   $media_ids = $this->ProgramsModel('dynamic_program_selection',$q);
+   if($media_ids) return array(true,'Selections',$media_ids);
+    else return array(false,'Selections','No selections found.');
+}
+
 }
