@@ -24,6 +24,7 @@ OBModules.Programs.assembleTracklist = function(program_id,playlist_id,playlist_
       $('#pod-series').text(progdata.data.title);
       $('#pod-artist').text(progdata.data.producer);
       $('#pod-comments').text('Created by Openbroadcaster Podcast Assembler on '+dateFormat(Date.now()));
+      $('#pod-comments').append('<br />');
 
   OB.API.post('playlist','get',{'id': playlist_id},function(response){
         playlist_items = response.data.items;
