@@ -116,7 +116,7 @@ OBModules.Programs.getSelection = function(q,n) {
 OBModules.Programs.getTrack = function(id,title)
 {
    OB.API.post('media','get',{'id':id},function(results){
-         $('#pod-comments').append(results.data.comments+'<br />'); 
+         if(results.data.comments!='') $('#pod-comments').append(results.data.comments+'<br />'); 
    OB.API.post('programs','getx',{'id': id},function(meta) {
          $('#showparts').append('<li>'+title+'</li>'); 
          if(meta.data)
