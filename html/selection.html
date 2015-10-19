@@ -1,8 +1,35 @@
-<fieldset>
-<legend data-t>Assembling show</legend>
-<p class="selection_heading"></p>
-<div class="fieldrow">
-<ul id="showparts">
-</ul>
+<div class="assembler" data-tns="Program Manager">
+ <fieldset>
+ <legend data-t>Podcaster</legend>
+ <p class="selection_heading"></p>
+ <div class="fieldrow">
+  <label data-t>Series</label>
+  <span id="pod-series"></span>
+  </div>
+
+ <div class="fieldrow">
+  <label data-t>Title</label>
+  <span id="pod-title"></span>
+  </div>
+
+ <div class="fieldrow">
+  <label data-t>Artist</label>
+  <span id="pod-artist"></span>
+  </div>
+
+ <div class="fieldrow">
+  <label data-t>Tracklist</label>
+  <ol style="display:inline-block" id="showparts">
+  </ol>
+ </div>
+
+ <div class="fieldrow">
+  <label data-t>Comments</label>
+  <span id="pod-comments"></span>
+  </div>
+
+ <div class="fieldrow">
+  <button class="close" value="Close" id="close_window" onclick="OB.UI.closeModalWindow();" data-t data-tns="Common">Close</button>
+ </div>
+</fieldset>
 </div>
-</fieldset

@@ -86,7 +86,7 @@ OBModules.Programs.detailsFormProcess = function(data)
         } else if($(ui.draggable).attr('data-mode')=='playlist')
 	{
          $('.sidebar_search_playlist_selected').each(function(index,element) {
-          OBModules.Programs.assemblePlaylist(program_id,$(element).attr('data-id'),$(element).attr('data-name'));  
+          OBModules.Programs.assembleTracklist(program_id,$(element).attr('data-id'),$(element).attr('data-name'));  
 	});
         }
       }
@@ -311,95 +311,6 @@ OBModules.Programs.appendCredit = function(id)
      if(credit !="" && rind !="") OBModules.Programs.addCredit(id,nextnum,role + ' : ' + credit);
     $form.find('#credit_role_add_name').val('');
     $form.find('#credit_roles').val('');
-}
-
-OBModules.Programs.assemblePlaylist = function(program_id,playlist_id,playlist_text)
-{
-  OB.API.post('playlist','get',{'id': playlist_id},function(response){
-        playlist_items = response.data.items;
-        total_duration = 0.00;
-        el = '';
-        queue = new Array();
-        for(var j in playlist_items) 
-	{
-         if(playlist_items[j]['type'] != 'dynamic')
-	{
-          queue_item=new Array();
-          queue_item.push('media');
-          queue_item.push(playlist_items[j]['id']);
-          queue_item.push(playlist_items[j]['title']);
-          queue.push(queue_item);
-        total_duration = +total_duration + +playlist_items[j]['duration'];
-	} else
-	{
-        total_duration = +total_duration + +playlist_items[j]['dynamic_duration'];
-        queue_item = new Array();
-        queue_item.push('dynamic');
-        queue_item.push(playlist_items[j]['dynamic_query']);
-        queue_item.push(playlist_items[j]['dynamic_num_items']);
-        queue.push(queue_item);
-
-	}
-	}
-      OB.UI.openModalWindow('modules/programs/selection.html');
-      var tmp = total_duration.toFixed(3);
-
-      var duration_seconds = tmp % 60;
-      tmp = (tmp - duration_seconds) / 60;
-      var duration_minutes = tmp % 60;
-      tmp = (tmp - duration_minutes) / 60;
-      var duration_hours = tmp % 24;
-      tmp = (tmp - duration_hours) / 24;
-      var duration_days = tmp;
-      var selection_duration = '';
-      if(duration_days>0) selection_duration += duration_days+'d';
-      if(duration_hours>0) selection_duration += duration_hours+'h';
-       selection_duration += duration_minutes+'m';
-       selection_duration += duration_days+'s';
-
-   $('.selection_heading').append('Donate NOW to Assemble '+ playlist_text+' into a single downloadable MP3 file: '+selection_duration); 
-        for(var j in queue)
-        {
-        if(queue[j][0]=='dynamic'){
-          OBModules.Programs.getSelection(queue[j][1],queue[j][2]);
-         } else {
-         $('#showparts').append('<li>'+queue[j][2]+'</li>'); 
-         }
-        }
-       setTimeout(function(){OB.UI.closeModalWindow()},4000);
-     });
- }
-
-function shuffle(array) {
-  var m = array.length, t, i;
-
-  // While there remain elements to shuffle…
-  while (m) {
-
-    // Pick a remaining element…
-    i = Math.floor(Math.random() * m--);
-
-    // And swap it with the current element.
-    t = array[m];
-    array[m] = array[i];
-    array[i] = t;
-  }
-
-  return array;
-}
-
-OBModules.Programs.getSelection = function(q,n) {
-      if(!n) var $num_items=1; else var $num_items=n;
-      var $query=q;
-      var $media_ids = new Array();
-      OB.API.post('programs','get_dynamic_selections',{'q': $query,'n': $num_items},function(selection){
-       var dyn_parts=selection.data; 
-       shuffle(dyn_parts);
-       for(var k = 0; k< $num_items; k++)
-        {
-         $('#showparts').append('<li>'+dyn_parts[k].artist+'-'+dyn_parts[k].title+'</li>'); 
-        }
-     });
 }
 
 OBModules.Programs.editPage = function()
