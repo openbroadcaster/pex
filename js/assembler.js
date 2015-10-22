@@ -146,17 +146,13 @@ OBModules.Programs.getTrack = function(id,title)
 }
   OBModules.Programs.buildPodcast = function()
   {
+        var $fileq = new Array();
    var filebase = $('#filequeue li')[0].innerText;
         $('#filequeue li').each(function(index){
-        if(index>0)
-        {
 	// build a comma seperated list of input files
-        var fileq = '';
-        fileq += this.innerText;
-     	OB.API.post('programs','build_podcast',{'filebase':filebase,'filename':fileq},function(status){
+        $fileq.push(this.innerText);
+       }); 
+     	OB.API.post('programs','build_podcast',{'filename':$fileq},function(status){
         if(status.status) OB.UI.alert(['Podcast',status.msg]); 	
     	});
-
-        }
-       }); 
   }

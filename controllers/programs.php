@@ -29,11 +29,13 @@ class Programs extends OBFController
 
   public function build_podcast()
 {
-
-   $filebase = '/home/obmedia/pex/'.$this->data('filebase');
-   $fileq = '/home/obmedia/pex/'.$this->data('filename');
-   $params = $filebase.' '.$fileq;
-   $pod = shell_exec('python modules/programs/tools/assembler.py '.$params);
+   $files = $this->data('filename');
+   foreach($files as $file)
+    {
+     $fileq = '/home/obmedia/pex'.$file;
+     $params .= $fileq.' ';
+    }
+     $pod = shell_exec('python modules/programs/tools/assembler.py '.$params);
    if($pod) return array(true,$pod);
 
 }
