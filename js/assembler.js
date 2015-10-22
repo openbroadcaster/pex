@@ -68,7 +68,7 @@ OBModules.Programs.assembleTracklist = function(program_id,playlist_id,playlist_
        selection_duration += duration_minutes+'m';
        selection_duration += duration_days+'s';
 
-   $('.selection_heading').append('Donate NOW to Assemble '+ playlist_text+' into a single downloadable episode of '+selection_duration); 
+//   $('.selection_heading').append('Donate NOW to Assemble '+ playlist_text+' into a single downloadable episode of '+selection_duration); 
         for(var j in queue)
         {
         if(queue[j][0]=='dynamic'){
@@ -117,7 +117,14 @@ OBModules.Programs.getSelection = function(q,n) {
 OBModules.Programs.getTrack = function(id,title)
 {
    OB.API.post('media','get',{'id':id},function(results){
-         if(results.data.comments!='') $('#pod-comments').append(results.data.comments+'<br />'); 
+    $media = results.data;
+    if($media.type=='audio')
+    {
+         if($media.comments!='') $('#pod-comments').append($media.comments+'<br />'); 
+    	$media_location ='/'+$media['file_location'][0]+'/'+$media['file_location'][1]+'/';
+    	$media_file = $media_location+$media['filename'];
+	$('#filequeue').append('<li>'+$media_file+'</li>');
+
    OB.API.post('programs','getx',{'id': id},function(meta) {
          $('#showparts').append('<li>'+title+'</li>'); 
          if(meta.data)
@@ -134,6 +141,23 @@ OBModules.Programs.getTrack = function(id,title)
           $('#showparts').append('</div></ul>');
          }
     });
+   }
   });
 
+  OBModules.Programs.buildPodcast = function()
+  {
+   var filebase = $('#filequeue li')[0].innerText;
+        $('#filequeue li').each(function(index){
+        if(index>0)
+        {
+	// build a comma seperated list of input files
+        var fileq = '';
+        fileq += this.innerText;
+     	OB.API.post('programs','build_podcast',{'filebase':filebase,'filename':fileq},function(status){
+        if(status.status) OB.UI.alert(['Podcast',status.msg]); 	
+    	});
+
+        }
+       }); 
+  }
 }

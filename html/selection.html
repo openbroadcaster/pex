@@ -1,7 +1,7 @@
 <div class="assembler" data-tns="Program Manager">
  <fieldset>
  <legend data-t>Podcaster</legend>
- <p class="selection_heading"></p>
+ <p class="selection_heading" data-t>Podcast Intro</p>
  <div class="fieldrow">
   <label data-t>Series</label>
   <span id="pod-series"></span>
@@ -28,8 +28,13 @@
   <span id="pod-comments"></span>
   </div>
 
+<div  class="fieldrow">
+<ul id="filequeue">
+</ul>
+</div>
  <div class="fieldrow">
   <button class="close" value="Close" id="close_window" onclick="OB.UI.closeModalWindow();" data-t data-tns="Common">Close</button>
+  <button disabled class="disabled" value="Build" id="build_file" onclick="OBModules.Programs.buildPodcast();" data-t data-tns="Program Manager">Build</button>
  </div>
 </fieldset>
 </div>

@@ -27,6 +27,16 @@ class Programs extends OBFController
     $this->ProgramsModel = $this->load->model('Programs');
   }
 
+  public function build_podcast()
+{
+
+   $filebase = '/home/obmedia/pex/'.$this->data('filebase');
+   $fileq = '/home/obmedia/pex/'.$this->data('filename');
+   $params = $filebase.' '.$fileq;
+   $pod = shell_exec('python modules/programs/tools/assembler.py '.$params);
+   if($pod) return array(true,$pod);
+
+}
 
   public function get_program()
   {
