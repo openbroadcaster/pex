@@ -143,7 +143,7 @@ OBModules.Programs.getTrack = function(id,title)
     });
    }
   });
-
+}
   OBModules.Programs.buildPodcast = function()
   {
    var filebase = $('#filequeue li')[0].innerText;
@@ -160,4 +160,3 @@ OBModules.Programs.getTrack = function(id,title)
         }
        }); 
   }
-}
