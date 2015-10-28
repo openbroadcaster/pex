@@ -1,4 +1,4 @@
-1. Copy all files into module/programs directory.
+1. Copy all files into modules/programs directory.
 2. Log into Openbroadcast Server as user with admin privileges.
 3. From admin->modules menu, install Program Manager module.
 4. Refresh browser to update GUI.
