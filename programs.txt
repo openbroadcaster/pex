@@ -22,6 +22,7 @@ Program Manager
   Episodes: Episodes
   Clear Field Button: Clear 
   # of Episodes: # of Episodes 
+  Podcast Intro: DONATE NOW! To support continued development on the podcast assembler, contact Rob Hopkins at Openbroadcaster.
 
 Program Settings
 
