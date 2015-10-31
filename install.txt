@@ -5,3 +5,4 @@
 5. New sidebar tab and media menu options for managing program metadata.
 6. New admin menu items for themes, credits and licensing. To populate the license options with Creative Commons licensing, use db/license.sql (i.e. mysql -u user -p pwd mydb<license.sql).  
 7. To assign placards to media, first drag images onto Program Gallery. Assign media to Program. Program images will be shown as alternative placards in the Extended Media editor
+8. Podcast assembler requires the python module 'pysox' and its dependencies. Install using 'pip install pysox'.
