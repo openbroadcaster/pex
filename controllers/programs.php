@@ -17,7 +17,6 @@
     You should have received a copy of the GNU Affero General Public License
     along with OpenBroadcaster Server.  If not, see <http://www.gnu.org/licenses/>.
 */
-
 class Programs extends OBFController
 {
 
@@ -25,20 +24,27 @@ class Programs extends OBFController
   {
     parent::__construct();
     $this->ProgramsModel = $this->load->model('Programs');
+    $this->db = OBFDB::get_instance();
   }
 
   public function build_podcast()
 {
    $files = $this->data('filename');
-   foreach($files as $file)
-    {
-     $fileq = '/home/obmedia/pex'.$file;
-     $params .= $fileq.' ';
-    }
-     $pod = shell_exec('python modules/programs/tools/assembler.py '.$params);
-   if($pod) return array(true,$pod);
+   $key = $this->randKey(); //16 random alphanumeric character string
+   $id = $this->db->insert('uploads',array('key'=>$key, 'format'=>'ogg','type'=>'audio', 'expiry'=>strtotime('+24 hours')));
+   array_unshift($files,$id);
+   $pod = $this->ProgramsModel('build_podcast',$files);
+   return array(true,"Podcast builder",['pod'=>$pod, 'key'=>$key,'id'=>$id]);
 
 }
+
+  private function randKey()
+  {
+    $chars = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0123456789';
+    $key = '';
+    for($i=0;$i<16;$i++)  $key.=$chars[rand(0,(strlen($chars)-1))];
+    return $key;
+  }
 
   public function get_program()
   {

@@ -100,8 +100,8 @@ class ProgramsModel extends OBFModel
         $result['credits'][]=$role;
       }
      //get latest episode
-     $latest = $this('get_latest_episodes',$row['pid']);
-     $result['latest_episode'] = $latest;
+     //$latest = $this('get_latest_episodes',$row['pid']);
+     //$result['latest_episode'] = $latest;
    }
    return $result;
   }
@@ -731,6 +731,18 @@ public function savex($item)
      }
    return $result;
   }
+  public function build_podcast($files)
+ {
+     $params = $files[0].' ';;
+   foreach(array_slice($files,1)as $file)
+    {
+     $fileq = OB_MEDIA.$file;
+     $params .= $fileq.' ';
+    }
+     $pod = shell_exec('python modules/programs/tools/assembler.py '.$params);
+   return array($pod);
+
+}
 
   public function dynamic_program_selection($search_query)
   {

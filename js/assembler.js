@@ -140,6 +140,7 @@ OBModules.Programs.getTrack = function(id,title)
            }
           $('#showparts').append('</div></ul>');
          }
+      OB.UI.widgetHTML($('#pod_details'));
     });
    }
   });
@@ -147,12 +148,61 @@ OBModules.Programs.getTrack = function(id,title)
   OBModules.Programs.buildPodcast = function()
   {
         var $fileq = new Array();
-   var filebase = $('#filequeue li')[0].innerText;
         $('#filequeue li').each(function(index){
 	// build a comma seperated list of input files
-        $fileq.push(this.innerText);
+        $fileq.push(this.innerHTML);
        }); 
-     	OB.API.post('programs','build_podcast',{'filename':$fileq},function(status){
-        if(status.status) OB.UI.alert(['Podcast',status.msg]); 	
-    	});
-  }
+    OB.API.post('programs','build_podcast',{'filename':$fileq},function(status){
+       if(!status.status) 
+	   { alert('Assembly failed. Check rate and format'); }
+	else {
+
+        var media_array = new Array();
+        var item = new Object();
+        item.local_id = '1';
+	item.file_id = status.data.id.toString();
+	item.file_key = status.data.key;
+
+        var file_info = new Array();
+        file_info['file_key']= status.data.key;
+        file_info['file_id'] = status.data.id.toString();
+        file_info['format'] = 'ogg';
+        file_info['type'] = 'audio';
+        item.file_info = file_info;
+
+        item.title = $('#pod-title').text();
+        item.album = $('#pod-series').text();
+        item.artist = $('#pod-artist').text();
+        item.comments = $('#pod-comments').text();
+        item.category_id = '60';
+	item.genre_id = '1113';
+        item.status = 'private';
+        item.is_copyright_owner = '1';
+        item.is_approved = '1';
+        item.dynamic_select = '1';
+        media_array.push(item);
+
+      OB.API.post('media','edit',{ 'media': media_array }, function(data) { 
+
+    	// one or more validation errors.
+    	if(data.status==false)
+    	{
+      	  var validation_errors = data.data;
+      	  for(var i in validation_errors)
+      	  {
+            $('#pod_assembler_message').obWidget('error',OB.t('Assemble Podcast',validation_errors[i][2]));
+          }
+    	}
+       // update/new complete, no errors.
+        else
+        {
+      	   $('#pod_details').html('');
+           $('#build_file').hide();
+      	   $('#pod_assembler_message').obWidget('success',['Program Manager','Podcast Created']);
+      	   OB.UI.widgetHTML($('#pod_assembler_message'));
+      	   OB.Sidebar.mediaSearch(); // reload our sidebar media search - maybe it needs updating.
+    	} 
+     });
+   }
+ });
+}
