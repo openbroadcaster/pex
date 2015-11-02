@@ -70,9 +70,9 @@ OBModules.Programs.detailsPage = function(pid)
            } else {
 	    var placard_src = '<img height="50px;" src="preview.php?id='+episode.placard_id+'&dl=0&mode=0"/>';
            }
-           var dhtml = '<tr><td>'+placard_src+'</td><td>'+htmlspecialchars(episode.title)+'</td><td>'+episode_date+'</td><td>'+secsToTime(episode.duration,"hms")+'</td>';
+           var dhtml = '<tr><td>'+placard_src+'</td><td>'+htmlspecialchars(episode.title)+'</td><td>'+episode.recording_date+'</td><td>'+secsToTime(episode.duration,"hms")+'</td>';
            dhtml +='<td ><button class="add episode_expand_link" id="episode_'+episode.id+'_expand_link" onclick="OBModules.Programs.episodeDetails('+episode.id+')">Expand</button></td>';
-           dhtml +='<td><a href="javascript:OB.Sidebar.playerPlay(\'program\',\'audio\','+episode.id+')">Preview</a></td></tr>';
+           dhtml +='<td><a href="javascript:OB.Sidebar.playerPlay(\'program\',\'audio\','+episode.id+')">Preview</a></td><td><a href="javascript:OB.Media.download('+episode.id+')">Download</a></td></tr>';
 	   dhtml +='<tr class="episode_details hidden" id="episode_'+episode.id+'_details"><td style="border-left:0px;"></td><td colspan="5">';
            var $html = OBModules.Programs.episodeForm(episode.id);
            dhtml += $html;

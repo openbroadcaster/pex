@@ -67,11 +67,11 @@ table-layout: fixed;
 width:100%;
 }
 .wide-col{
- width:12pc;
+ width:14pc;
 }
-.narrow-col{
+table td .narrow-col{
  width:4pc;
- padding-right:8px;
+ padding-right:4px;
 }
 #program_details_episodes_table th {
   border-bottom: solid 1px white;

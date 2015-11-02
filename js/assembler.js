@@ -39,7 +39,7 @@ OBModules.Programs.assembleTracklist = function(program_id,playlist_id,playlist_
           queue_item=new Array();
           queue_item.push('media');
           queue_item.push(playlist_items[j]['id']);
-          queue_item.push(playlist_items[j]['artist']+'-'+playlist_items[j]['title']);
+          queue_item.push(playlist_items[j]['artist']+'-'+playlist_items[j]['title']+' : '+secsToTime(playlist_items[j]['duration']));
           queue.push(queue_item);
         total_duration = +total_duration + +playlist_items[j]['duration'];
 	} else if(playlist_items[j]['type'] != 'station_id')
@@ -53,22 +53,8 @@ OBModules.Programs.assembleTracklist = function(program_id,playlist_id,playlist_
 
 	}
 	}
-      var tmp = total_duration.toFixed(3);
-
-      var duration_seconds = tmp % 60;
-      tmp = (tmp - duration_seconds) / 60;
-      var duration_minutes = tmp % 60;
-      tmp = (tmp - duration_minutes) / 60;
-      var duration_hours = tmp % 24;
-      tmp = (tmp - duration_hours) / 24;
-      var duration_days = tmp;
-      var selection_duration = '';
-      if(duration_days>0) selection_duration += duration_days+'d';
-      if(duration_hours>0) selection_duration += duration_hours+'h';
-       selection_duration += duration_minutes+'m';
-       selection_duration += duration_days+'s';
-
-//   $('.selection_heading').append('Donate NOW to Assemble '+ playlist_text+' into a single downloadable episode of '+selection_duration); 
+      var selection_duration = secsToTime(total_duration);
+   $('#pod-duration').text(selection_duration); 
         for(var j in queue)
         {
         if(queue[j][0]=='dynamic'){
@@ -109,7 +95,8 @@ OBModules.Programs.getSelection = function(q,n) {
        shuffle(dyn_parts);
        for(var k = 0; k< $num_items; k++)
         {
-         OBModules.Programs.getTrack(dyn_parts[k].id,dyn_parts[k].artist+'-'+dyn_parts[k].title); 
+         tracktime = secsToTime(dyn_parts[k].duration);
+         OBModules.Programs.getTrack(dyn_parts[k].id,dyn_parts[k].artist+'-'+dyn_parts[k].title +' : '+tracktime); 
         }
      });
 }
@@ -123,10 +110,11 @@ OBModules.Programs.getTrack = function(id,title)
          if($media.comments!='') $('#pod-comments').append($media.comments+'<br />'); 
     	$media_location ='/'+$media['file_location'][0]+'/'+$media['file_location'][1]+'/';
     	$media_file = $media_location+$media['filename'];
+//just using page to stash values, should go straight into array
 	$('#filequeue').append('<li>'+$media_file+'</li>');
+        $('#showparts').append('<li>'+title+'</li>'); 
 
    OB.API.post('programs','getx',{'id': id},function(meta) {
-         $('#showparts').append('<li>'+title+'</li>'); 
          if(meta.data)
          {
           tracks = meta.data.tracklist;
@@ -168,6 +156,7 @@ OBModules.Programs.getTrack = function(id,title)
         file_info['file_id'] = status.data.id.toString();
         file_info['format'] = 'ogg';
         file_info['type'] = 'audio';
+        file_info['duration'] = parseFloat(status.data.pod[0]);
         item.file_info = file_info;
 
         item.title = $('#pod-title').text();
@@ -201,6 +190,7 @@ OBModules.Programs.getTrack = function(id,title)
       	   $('#pod_details').html($('#showparts'));
            $('#build_file').hide();
       	   $('#pod_assembler_message').obWidget('success',['Program Manager','Podcast Created']);
+           $('#podcast_exit_button').text = 'Close';
       	   OB.UI.widgetHTML($('#pod_assembler_message'));
       	   OB.Sidebar.mediaSearch(); // reload our sidebar media search - maybe it needs updating.
 
@@ -210,10 +200,11 @@ OBModules.Programs.getTrack = function(id,title)
  var tracklist = '';
         $('#showparts li').each(function(index){
         // build an array of input files
-        tracklist += this.innerHTML + ',';
+        tracklist += this.innerHTML + '\n';
        });
  meta.id = loc_id;
  meta.tracklist = tracklist;
+ meta.recording_date = dateFormat(Date.now(),"isoDate"); 
  extended_array.push(meta);
   OB.API.post('programs','editx',{ 'media': extended_array }, function(datax) { 
 

@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 import os
 import sys
-import tempfile
-import shutil
+import subprocess
 
 try:
   import pysox;
@@ -12,18 +11,12 @@ except ImportError:
 
 def assemble(ftype,fpath, catfiles):
 	d = os.path.join(os.path.dirname(os.path.abspath(__file__)),'..','..','..','assets/uploads')
-	#f = tempfile.NamedTemporaryFile(mode='w+t',dir=d)
-	#fname = f.name
-        #d = tempfile.mkdtemp()
         fname = os.path.join(d,fpath)
 	try:
 	  id = pysox.ConcatenateFiles('input',catfiles)
 	except:
           print 'Concat fail' 
-	   #os.removedirs(d)
 	  sys.exit(1);
-        #print(id.get_in_signal())
-        #print(id.get_out_signal())
         try:
           outfile = pysox.CSoxStream(fname,'w',id.get_out_signal(),fileType=ftype)
           chain = pysox.CEffectsChain(ostream=outfile)
@@ -32,12 +25,9 @@ def assemble(ftype,fpath, catfiles):
 	except:
           print 'Write fail' 
 	  sys.exit(1);
-	#newf = fpath + '/uploads/output2.wav'
-	#shutil.move(f,newf)
-	#os.removedirs(d)
+	duration = subprocess.check_output(["soxi", "-D",fname])
         outfile.close()
-        print 'Success' 
-        sys.exit(0);
+        print duration 
 
 def main(argv):
   if len(argv) <=3:

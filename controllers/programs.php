@@ -34,6 +34,8 @@ class Programs extends OBFController
    $id = $this->db->insert('uploads',array('key'=>$key, 'format'=>'ogg','type'=>'audio', 'expiry'=>strtotime('+24 hours')));
    array_unshift($files,$id);
    $pod = $this->ProgramsModel('build_podcast',$files);
+   $this->db->where('key',$key);
+   $ok = $this->db->update('uploads',array('duration'=>floatval($pod[0])));
    return array(true,"Podcast builder",['pod'=>$pod, 'key'=>$key,'id'=>$id]);
 
 }
