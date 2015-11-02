@@ -149,7 +149,7 @@ OBModules.Programs.getTrack = function(id,title)
   {
         var $fileq = new Array();
         $('#filequeue li').each(function(index){
-	// build a comma seperated list of input files
+	// build an array of input files
         $fileq.push(this.innerHTML);
        }); 
     OB.API.post('programs','build_podcast',{'filename':$fileq},function(status){
@@ -196,11 +196,44 @@ OBModules.Programs.getTrack = function(id,title)
        // update/new complete, no errors.
         else
         {
-      	   $('#pod_details').html('');
+	// build a comma seperated list of input files
+	   var loc_id = data.data;
+      	   $('#pod_details').html($('#showparts'));
            $('#build_file').hide();
       	   $('#pod_assembler_message').obWidget('success',['Program Manager','Podcast Created']);
       	   OB.UI.widgetHTML($('#pod_assembler_message'));
       	   OB.Sidebar.mediaSearch(); // reload our sidebar media search - maybe it needs updating.
+
+//update extended metadata 
+ var extended_array = new Array();
+ var meta = new Object();
+ var tracklist = '';
+        $('#showparts li').each(function(index){
+        // build an array of input files
+        tracklist += this.innerHTML + ',';
+       });
+ meta.id = loc_id;
+ meta.tracklist = tracklist;
+ extended_array.push(meta);
+  OB.API.post('programs','editx',{ 'media': extended_array }, function(datax) { 
+
+    // one or more validation errors.
+    if(datax.status==false)
+    {
+      var validation_errors = datax.data;
+
+      for(var i in validation_errors)
+      {
+        $('#media_addedit_'+validation_errors[i][1]).find('.addedit_form_message').obWidget('error',OB.t('Edit Media Form',validation_errors[i][2]));
+      }
+    }
+    // update/new complete, no errors.
+    else
+    {
+      $('#media_top_message').obWidget('success',['Edit Media Form','Extended Media Saved']);
+    } 
+  });
+
     	} 
      });
    }
