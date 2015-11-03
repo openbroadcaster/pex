@@ -21,6 +21,7 @@ OBModules.Programs.assembleTracklist = function(program_id,playlist_id,playlist_
 {
  OB.API.post('programs','get_program',{'pid':program_id},function(progdata){
       OB.UI.openModalWindow('modules/programs/selection.html');
+      $('#pod-id').text(program_id);
       $('#pod-series').text(progdata.data.title);
       $('#pod-artist').text(progdata.data.producer);
       $('#pod-comments').text('Created by Openbroadcaster Podcast Assembler on '+dateFormat(Date.now()));
@@ -154,7 +155,7 @@ OBModules.Programs.getTrack = function(id,title)
         var file_info = new Array();
         file_info['file_key']= status.data.key;
         file_info['file_id'] = status.data.id.toString();
-        file_info['format'] = 'ogg';
+        file_info['format'] = 'wav';
         file_info['type'] = 'audio';
         file_info['duration'] = parseFloat(status.data.pod[0]);
         item.file_info = file_info;
@@ -187,12 +188,13 @@ OBModules.Programs.getTrack = function(id,title)
         {
 	// build a comma seperated list of input files
 	   var loc_id = data.data;
+           OBModules.Programs.detailsAddMediaId($('#pod-id').text(),loc_id,$('#pod-title').text());
+      	   OB.UI.widgetHTML($('#pod_assembler_message'));
+      	   OB.Sidebar.mediaSearch(); // reload our sidebar media search - maybe it needs updating.
       	   $('#pod_details').html($('#showparts'));
            $('#build_file').hide();
       	   $('#pod_assembler_message').obWidget('success',['Program Manager','Podcast Created']);
-           $('#podcast_exit_button').text = 'Close';
-      	   OB.UI.widgetHTML($('#pod_assembler_message'));
-      	   OB.Sidebar.mediaSearch(); // reload our sidebar media search - maybe it needs updating.
+           $('#podcast_exit_button').text('Close');
 
 //update extended metadata 
  var extended_array = new Array();
