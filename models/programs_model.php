@@ -100,8 +100,8 @@ class ProgramsModel extends OBFModel
         $result['credits'][]=$role;
       }
      //get latest episode
-     //$latest = $this('get_latest_episodes',$row['pid']);
-     //$result['latest_episode'] = $latest;
+     $latest = $this('get_latest_episodes',$row['pid']);
+     $result['latest_episode'] = $latest;
    }
    return $result;
   }

@@ -142,7 +142,8 @@ OBModules.Programs.getTrack = function(id,title)
         $fileq.push(this.innerHTML);
        }); 
     OB.API.post('programs','build_podcast',{'filename':$fileq},function(status){
-       if(!status.status) 
+       pod_time = parseFloat(status.data.pod[0]);
+       if(!status.status || !pod_time > 0) 
 	   { alert('Assembly failed. Check rate and format'); }
 	else {
 
@@ -157,7 +158,7 @@ OBModules.Programs.getTrack = function(id,title)
         file_info['file_id'] = status.data.id.toString();
         file_info['format'] = 'wav';
         file_info['type'] = 'audio';
-        file_info['duration'] = parseFloat(status.data.pod[0]);
+        file_info['duration'] = pod_time;
         item.file_info = file_info;
 
         item.title = $('#pod-title').text();
