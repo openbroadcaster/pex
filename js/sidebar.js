@@ -359,7 +359,7 @@ OB.Sidebar.programSearch = function(pagination)
 
           var num_selected = $('.sidebar_search_program_selected').size();
 
-          if(num_selected==1) var helper_text = $(ui.helper).attr('data-name');
+          if(num_selected==1) var helper_text = $(ui.helper).attr('data-title');
           else var helper_text = num_selected+' items';
 
           $(ui.helper).html('<div class="sidebar_dragging_items">'+htmlspecialchars(helper_text)+'</div>');

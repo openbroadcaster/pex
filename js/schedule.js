@@ -133,7 +133,7 @@ $('#schedule_container').droppable({
 
           if($('.sidebar_search_program_selected').length!=1) { OB.UI.alert(['Schedule','Schedule Only One']); return; }
 
-          var item_type = 'episode';
+          var item_type = 'media';
           var item_id = $('.sidebar_search_program_selected').first().attr('data-pid');
           var item_name = $('.sidebar_search_program_selected').first().attr('data-title');
           var item_duration = $('.sidebar_search_program_selected').first().attr('data-duration');
