@@ -437,7 +437,8 @@ class ProgramsModel extends OBFModel
     }
     // otherwise, show the most recently updated first
     else $this->db->orderby('updated','desc');
-
+    
+    if(method_exists($this->db,'calc_found_rows')) $this->db->calc_found_rows();
     $programs = $this->db->get('programs');
     return array('num_results'=>$this->db->found_rows(),'programs'=>$programs);
   }
