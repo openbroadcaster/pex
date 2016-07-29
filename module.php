@@ -102,7 +102,7 @@ class ProgramsModule extends OBFModule
        $this->db->query('CREATE TABLE IF NOT EXISTS `program_keywords` (
   	`program_id` int(11) unsigned NOT NULL,
   	`tag` varchar(255) NOT NULL,
-  	PRIMARY KEY (`program_id`)
+  	 KEY (`program_id`)
   	) ENGINE=MyISAM DEFAULT CHARSET=latin1 ;'
 	);
 

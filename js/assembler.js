@@ -27,18 +27,11 @@ OBModules.Programs.assembleTracklist = function(program_id,playlist_id,playlist_
   {
     $('.category_field').append('<option value="'+OB.Settings.categories[i].id+'" name="'+OB.Settings.categories[i].name+'">'+htmlspecialchars(OB.t('Media Categories',OB.Settings.categories[i].name))+'</option>');
   }
-
-      $('.category_field option[name="Shows - Complete"]').prop('selected', true);
-  	//Setup genre dropdown
-	  var selected_category = $('.category_field').val();
-	  $('.genre_field option').remove();
-
-	  // fill genre list
-	  for(var i in OB.Settings.genres)
-	  {
-	    if(OB.Settings.genres[i].media_category_id == selected_category)
-	      $('.genre_field').append('<option value="'+OB.Settings.genres[i].id+'">'+htmlspecialchars(OB.t('Media Genres',OB.Settings.genres[i].name))+'</option>');
-	  }
+  // tie together genre list with category list on change
+      $('.category_field').change(function() { updateGenre(); });
+      $('.category_field option[name="Shows - Complete"]').prop('selected', true);  
+      $('.category_field option[name="Shows-Complete"]').prop('selected', true); 
+      updateGenre();
       $('#pod-id').text(program_id);
       $('#pod-series').text(progdata.data.title);
       $('#pod-artist').text(progdata.data.producer);
@@ -86,6 +79,19 @@ OBModules.Programs.assembleTracklist = function(program_id,playlist_id,playlist_
      });
   });
  }
+
+function updateGenre() {
+//Setup genre dropdown
+	  var selected_category = $('.category_field').val();
+	  $('.genre_field option').remove();
+
+	  // fill genre list
+	  for(var i in OB.Settings.genres)
+	  {
+	    if(OB.Settings.genres[i].media_category_id == selected_category)
+	      $('.genre_field').append('<option value="'+OB.Settings.genres[i].id+'">'+htmlspecialchars(OB.t('Media Genres',OB.Settings.genres[i].name))+'</option>');
+	  }
+}
 
 function shuffle(array) {
   var m = array.length, t, i;
@@ -185,8 +191,8 @@ OBModules.Programs.getTrack = function(id,title)
         item.comments = $('#pod-comments').text();
 /* these are hardcoded, need to fix */
 	
-        item.category_id = '11';
-	item.genre_id = '996';
+        item.category_id = $('.category_field').val();
+	item.genre_id = $('.genfre_field').val();;
         item.status = 'private';
         item.is_copyright_owner = '1';
         item.is_approved = '1';
