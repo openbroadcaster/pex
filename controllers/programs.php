@@ -86,7 +86,7 @@ class Programs extends OBFController
     $id = $this->data('pid');
     $params['id'] = $this->data('pid');
     $params['filters'] = $this->data('filters');
-    $episodes = $this->ProgramsModel('get_episode',$params);
+    $episodes = $this->ProgramsModel('get_episodes',$params);
     return array(true,"Episodes",$episodes);
   }
   public function latest_episode()
@@ -346,5 +346,21 @@ class Programs extends OBFController
    if($media_ids) return array(true,'Selections',$media_ids);
     else return array(false,'Selections','No selections found.');
 }
+  public function set_series()
+  {
+   $data = array();
+   $id = trim($this->data['pid']);
+   $data['device_id'] = trim($this->data['device_id']);
+   $data['episodes'] = trim($this->data['episodes']);
+   //$this->ProgramsModel('set_program_series',$data, $id); //change to get from series table
+   return array(true,"episodes", $episodes);
+  }
 
+  public function get_series()
+  {
+   $id = trim($this->data['pid']);
+   $device = trim($this->data['device']);
+   $episodes = $this->ProgramsModel('get_episodes',$id,$device); //change to get from series table
+   return array(true,"episodes", $episodes);
+  }
 }

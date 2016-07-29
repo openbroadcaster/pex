@@ -165,8 +165,9 @@ OBModules.Programs.getTrack = function(id,title)
         item.album = $('#pod-series').text();
         item.artist = $('#pod-artist').text();
         item.comments = $('#pod-comments').text();
-        item.category_id = '60';
-	item.genre_id = '1113';
+/* these are hardcoded, need to fix */
+        item.category_id = '11';
+	item.genre_id = '996';
         item.status = 'private';
         item.is_copyright_owner = '1';
         item.is_approved = '1';
@@ -174,7 +175,7 @@ OBModules.Programs.getTrack = function(id,title)
         media_array.push(item);
 
       OB.API.post('media','edit',{ 'media': media_array }, function(data) { 
-
+        // modified controllers/media.php/edit function to return the media_id for new file
     	// one or more validation errors.
     	if(data.status==false)
     	{
@@ -188,7 +189,7 @@ OBModules.Programs.getTrack = function(id,title)
         else
         {
 	// build a comma seperated list of input files
-	   var loc_id = data.data;
+	   var loc_id = data.data; //modified calling function to return media_id
            OBModules.Programs.detailsAddMediaId($('#pod-id').text(),loc_id,$('#pod-title').text());
       	   OB.UI.widgetHTML($('#pod_assembler_message'));
       	   OB.Sidebar.mediaSearch(); // reload our sidebar media search - maybe it needs updating.

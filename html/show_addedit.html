@@ -14,13 +14,22 @@
 
 <div class="fieldrow">
   <label class="required" data-t>Program Mode</label>
-  <select id="program_mode">
+  <select  id="program_mode">
     <option value="latest" data-t>Most Recent</option>
-    <option disabled value="series" data-t>Series</option>
+    <option value="series" data-t>Series</option>
     <option disabled value="random" data-t>Random</option>
   </select>
 </div>
-
+<div class="fieldrow hidden" id="episodes">
+  <label data-t>Episodes</label>
+  <div id="series">
+    <table id="series_episodes">
+      <tbody>
+        <tr><td class="episode" data-t>Loading</td></tr>
+      </tbody>
+    </table>
+  </div></div>
+</div>
 <div class="fieldrow">
   <label class="required" data-t>Timeslot</label>
   <select onchange="OB.Schedule.addeditShowWindowTimeslotChange();" id="show_time_slot"><option id="timeslot_manual_input_option" data-t>Manual Input Option</option></select>
@@ -260,7 +269,7 @@
 <fieldset>
 
 <div class="fieldrow">
-  <button class="add" value="Save" id="item_properties_save" onclick="OB.Schedule.saveShow();" data-t data-tns="Common">Save</button>
+  <button class="add" value="Save" id="item_properties_save" onclick="OB.Schedule.saveProgram();" data-t data-tns="Common">Save</button>
   <button class="delete edit_only" id="item_properties_delete" onclick="OB.Schedule.deleteShow();" data-t data-tns="Common">Delete</button>
   <button id="item_properties_cancel" onclick="OB.UI.closeModalWindow();" data-t data-tns="Common">Cancel</button>
 </div>

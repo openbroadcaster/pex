@@ -130,11 +130,15 @@ class ProgramsModel extends OBFModel
 
    public function get_latest_episodes($id)
   {
-   $this->db->query('SELECT programs_media_ids.program_id,programs_media_ids.media_id,media_meta.recording_date FROM programs_media_ids INNER JOIN media_meta on programs_media_ids.media_id=media_meta.id WHERE programs_media_ids.program_id='.$id.' ORDER BY recording_date desc,media_id DESC LIMIT 1;');
+    $this->db->what('latest_media');
+	$this->db->where('pid',$id);
+	$result = $this->db->get_one('programs');
+	if($result) return $result[0];
+//  $this->db->query('SELECT  programs_media_ids.program_id,programs_media_ids.media_id,media_meta.recording_date FROM programs_media_ids INNER JOIN media_meta on programs_media_ids.media_id=media_meta.id WHERE programs_media_ids.program_id='.$id.' ORDER BY recording_date desc,media_id DESC LIMIT 1;');
 //   $this->db->query('select programs_media_ids.program_id,programs_media_ids.media_id,max(recording_date) as latest_episode from media_meta left join programs_media_ids on programs_media_ids.media_id=media_meta.id where program_id ='.$id.' group by program_id;');
 
-  $rows = $this->db->assoc_list();
-  if($rows) return $rows[0];
+//  $rows = $this->db->assoc_list();
+//  if($rows) return $rows[0];
   }
 
   public function get_episode($params)
@@ -272,7 +276,21 @@ class ProgramsModel extends OBFModel
     foreach($episode_ids as $episode_id) $media_ids[]=$episode_id['media_id'];
     return $media_ids;
   }
-
+  public function get_episodes($id,$device)
+  {
+   
+    $this->db->where('program_id',$id);
+    $this->db->orderby('episode');
+    $episodes = $this->db->get('programs_media_ids');
+    $media = array();
+    foreach($episodes as $episode)
+      {
+        $this->db->where('id',$episode['media_id']);
+        $media_item=$this->db->get_one('media');
+        $media[$episode['episode']]=$media_item;
+       }
+     return $media;
+  }
   public function get_gallery_ids($id)
   {
     $this->db->where('program_id',$id);
@@ -631,18 +649,21 @@ class ProgramsModel extends OBFModel
       $this->db->delete('programs_media_ids');
 
       // add all the episode IDs we have.
-
+      $lastID = 0;
       if(is_array($episode_ids)) foreach($episode_ids as $episode_id) 
-
       { 
         $i++;
         $episode_id_data['media_id']=$episode_id;
         $episode_id_data['episode'] = $i;
 
         $this->db->insert('programs_media_ids',$episode_id_data);
-
+        $lastID = $i;
       }
-       $latest=$this('set_latest_episode',$id);
+      $db['latest_media'] = $episode_ids[$lastID-1]['media_id'];
+ 
+      $this->db->where('pid',$id);
+
+      $update = $this->db->update('programs',$db);
     }
    
 
