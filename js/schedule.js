@@ -3,9 +3,10 @@ OB.Schedule.programModeChange = function()
 {
   $('#episodes').hide();
   if($('#program_mode option:selected').val()=='series') {
-  // Disable on-time schedule option
+  // Disable one-time schedule option
   $("#show_mode option[value='once']").attr('disabled','disabled');
   $("#show_mode").val('daily');
+  $("#show_addedit_stop").show();
   var pfields = new Object();
   pfields.pid = $('.sidebar_search_program_selected').first().attr('data-pid'); //$('#show_item_id').val();
   pfields.device = OB.Schedule.device_id; //need this to come from schedule
@@ -16,17 +17,14 @@ OB.Schedule.programModeChange = function()
     $('#series_episodes tbody').append('<tr><th data-t>Episode</th><th data-t>Title</th><th>Select</th></tr>');
     for(var i in series)
 	{
-	$('#series_episodes tbody').append('<tr><td>'+i+'</td><td>'+series[i]['title']+'</td><td><input class="chbx" type="checkbox" name="'+series[i]['id']+'" checked="checked"></td></tr>');
+	$('#series_episodes tbody').append('<tr><td>'+i+'</td><td>'+series[i]['title']+'</td><td><input class="chbx" type="checkbox" name="'+series[i]['id']+'" value="'+i+'" checked="checked"></td></tr>');
         }
 
   $('#episodes').show();
 
 
    });
- } else
-{
-  $('#show_item_type').val('media');
-}
+ } 
 }
 
 OB.Schedule.seriesEpisodeChange = function()
@@ -202,7 +200,12 @@ $('#schedule_container').droppable({
 
 OB.Schedule.saveProgram = function()
 {
- 
+ if($('#program_mode option:selected').val()=='series') 
+  {
+         var redo = $('#repeat').is(':checked');
+	 OB.Schedule.buildSchedule(redo);
+	
+  } else {
   fields = new Object();
 
   fields.id = $('#show_id').val();
@@ -225,7 +228,6 @@ OB.Schedule.saveProgram = function()
 
   if(fields.mode!='once' && $('#show_stop_date').val())
   {
-
     var stop_date_array = $('#show_stop_date').val().split('-');
     var stop_date = new Date(parseInt(stop_date_array[0]),parseInt(stop_date_array[1]-1),parseInt(stop_date_array[2]),23,59,59,0);  
 
@@ -235,24 +237,6 @@ OB.Schedule.saveProgram = function()
   else fields.stop = '';
 
   fields.device_id = OB.Schedule.device_id;
-
-   if($('#program_mode option:selected').val()=='series') {
-        var playme = new Array();
-        $('#series_episodes').find('tr').each(function () {
-        var row = $(this);
-        if (row.find('input[type="checkbox"]').is(':checked')) {
-		 // cycle thru selected series as distinct media type schedule entries
-		fields.item_id = (row.find('input[type="checkbox"]').attr('name'));
-	  	OB.API.post('schedule','save_show',fields,function(data) {
-
-	   	 if(data.status==true){ }
-	  
-		//playme.push(row.find('input[type="checkbox"]').attr('name') + ' on date');
-		});
-          }
-		});
-		//alert('Series '+ $('#show_item_id').val()+' includes following episode(s):\n'+playme.join('\n')); //program_series for each selected episode
-	}
   fields.item_type = $('#show_item_type').val();
   fields.item_id = $('#show_item_id').val();
 
@@ -260,44 +244,81 @@ OB.Schedule.saveProgram = function()
 
     if(data.status==true)
     {
-
       OB.UI.closeModalWindow();
       OB.Schedule.loadSchedule();
-
     }
-
     else
     {
       $('#show_addedit_message').obWidget('error',data.msg);
     }
-
   });
-
-
+}
 }
 
+OB.Schedule.buildSchedule = function (fillslot){
+ 	var stop_date_array = $('#show_stop_date').val().split('-');
+	var stop_date = new Date(parseInt(stop_date_array[0]),parseInt(stop_date_array[1]-1),parseInt(stop_date_array[2]),23,59,59,0);  
+       	var start_date_array = $('#show_start_date').val().split('-');
+	var start_time_array = $('#show_start_time').val().split(':');
+	var start_date = new Date(start_date_array[0],start_date_array[1]-1,start_date_array[2],start_time_array[0],start_time_array[1],start_time_array[2],0);	  
+	var show_date=new Date(start_date.getTime());
 
-OB.Schedule.saveShow = (function(){
-
-   var cached_function = OB.Schedule.saveShow;
-   return function(){   
-
-   // Before sending to saveShow, we need to create a series ID, and set the show_item_type='series' and show_it_id=series_id
-   // device
-        $('#show_item_type').val('series');
-	$('#show_item_id').val(1); //returned from insert of series
-        var playme = new Array();
-        $('#series_episodes').find('tr').each(function () {
+      while(start_date<stop_date){
+        
+        var offset = 0;
+	$('#series_episodes').find('tr').each(function (i) {
         var row = $(this);
-        if (row.find('input[type="checkbox"]').is(':checked')) {
-	playme.push(row.find('input[type="checkbox"]').attr('name'));
-	}
+        fields = new Object();
+	if (row.find('input[type="checkbox"]').is(':checked')) {
+	   // cycle thru selected series as distinct media type schedule entries
+	   fields.item_id = (row.find('input[type="checkbox"]').attr('name'));
+	   fields.id = $('#show_id').val();
+	   fields.edit_recurring = $('#show_edit_recurring').val();
+	   fields.mode = $('#show_mode').val();
+	   fields.x_data = $('#show_x_data').val();
+
+
+	  fields.device_id = OB.Schedule.device_id;
+	  fields.item_type = $('#show_item_type').val();
+
+	  fields.duration_days = $('#show_duration_days').val();
+	  fields.duration_hours = $('#show_duration_hours').val();
+	  fields.duration_minutes = $('#show_duration_minutes').val();
+	  fields.duration_seconds = $('#show_duration_seconds').val();
+
+
+	  if(fields.mode!='daily' && fields.mode!='weekly' && fields.mode!='monthly') offset = fields.x_data*offset;
+
+	  if(fields.mode=='daily' || fields.mode=='xdays') 
+	    {
+ 	     show_date.setDate(start_date.getDate()+ offset*1);
+	    }
+	   else if(fields.mode=='weekly' || fields.mode=='xweeks') 
+	    {
+ 	     show_date.setDate(start_date.getDate()+ offset*7);
+	    }
+	    else 
+	    { 
+ 	     show_date.setMonth(start_date.getMonth()+ offset);
+	    }
+	  fields.mode='once';
+	  fields.start = Math.round(show_date.getTime()/1000)+'';
+	  fields.stop = '';
+
+	  OB.API.post('schedule','save_show',fields,function(data) {
+
+	    if(data.status!=true)
+	    {
+	      $('#show_addedit_message').obWidget('error',data.msg);
+	    }
+	  });
+	   offset++;
+          }
 	});
-	alert('Series '+ $('#show_item_id').val()+':\n'+playme.join('\n')); //program_series for each selected episode
-
-   var result = cached_function.apply(this.arguments);
-
-    return result;
-
-   };
-  }());
+	if(!fillslot) start_date=stop_date;
+	else start_date=new Date(show_date.getTime());
+	start_date.setDate(show_date.getDate()+ 1);
+}
+      OB.UI.closeModalWindow();
+      OB.Schedule.loadSchedule();
+}

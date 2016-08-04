@@ -40,7 +40,7 @@ OBModules.Programs.assembleTracklist = function(program_id,playlist_id,playlist_
 
   OB.API.post('playlist','get',{'id': playlist_id},function(response){
         playlist_items = response.data.items;
-        $('#pod-title').text(response.data.name+' '+dateFormat(Date.now(),"isoDate"));
+        $('#pod-title').val(response.data.name+' '+dateFormat(Date.now(),"isoDate"));
         total_duration = 0.00;
         el = '';
         queue = new Array();
@@ -130,34 +130,42 @@ OBModules.Programs.getTrack = function(id,title)
 {
    OB.API.post('media','get',{'id':id},function(results){
     $media = results.data;
-    if($media.type=='audio')
-    {
-         if($media.comments!='') $('#pod-comments').append($media.comments+'<br />'); 
-    	$media_location ='/'+$media['file_location'][0]+'/'+$media['file_location'][1]+'/';
+
+   	OB.API.post('programs','getx',{'id': id},function(meta){
+    	if($media.type=='audio')
+    	{
+//	$('#pod-comments').append('<div class="padl">'+$media['file_location'][1]+'</div>');
+//         if($media.comments!='') $('#pod-comments').append('<div class="padl">'+$media.comments+'</div>'); 
+//  
+  	$media_location ='/'+$media['file_location'][0]+'/'+$media['file_location'][1]+'/';
     	$media_file = $media_location+$media['filename'];
 //just using page to stash values, should go straight into array
 	$('#filequeue').append('<li>'+$media_file+'</li>');
         $('#showparts').append('<li>'+title+'</li>'); 
 
-   OB.API.post('programs','getx',{'id': id},function(meta) {
          if(meta.data)
          {
           tracks = meta.data.tracklist;
-         if(tracks !='')  $('#showparts').append('<div class="padl">Tracks: <ul style="display:inline-block;">'+ tracks + '</ul><br /></div>');
-         
           credits = meta.data.credits;
-          $('#showparts').append('<div class="padl">Credits:<ul>');
-          for(var k in credits)
-           {
-            $('#showparts').append('<ul>'+credits[k].role+':'+credits[k].name+'</ul>');
-           }
-          $('#showparts').append('</div></ul>');
-         }
+         if(tracks !='') $('#showparts').append('<div class="padl">Tracks: <ul style="display:inline-block;">'+ tracks + '</ul></div><br />');
+//
+//        if(credits !='')
+//	{
+//          $('#pod-comments').append('<div class="padl">Credits:');
+//          for(var k in credits)
+//           {
+//            $('#pod-comments').append('<ul>'+credits[k].role+':'+credits[k].name+'</ul>');
+//           }
+//	   $('#pod-comments').append('</div>');
+//         }
+	}
+
       OB.UI.widgetHTML($('#pod_details'));
-    });
-   }
+       }
   });
+});
 }
+
   OBModules.Programs.buildPodcast = function()
   {
         var $fileq = new Array();
@@ -185,14 +193,14 @@ OBModules.Programs.getTrack = function(id,title)
         file_info['duration'] = pod_time;
         item.file_info = file_info;
 
-        item.title = $('#pod-title').text();
+        item.title = $('#pod-title').val();
         item.album = $('#pod-series').text();
         item.artist = $('#pod-artist').text();
         item.comments = $('#pod-comments').text();
 /* these are hardcoded, need to fix */
 	
         item.category_id = $('.category_field').val();
-	item.genre_id = $('.genfre_field').val();;
+	item.genre_id = $('.genre_field').val();;
         item.status = 'private';
         item.is_copyright_owner = '1';
         item.is_approved = '1';
@@ -215,7 +223,7 @@ OBModules.Programs.getTrack = function(id,title)
         {
 	// build a comma seperated list of input files
 	   var loc_id = data.data; //modified calling function to return media_id
-           OBModules.Programs.detailsAddMediaId($('#pod-id').text(),loc_id,$('#pod-title').text());
+           OBModules.Programs.detailsAddMediaId($('#pod-id').text(),loc_id,$('#pod-title').val());
       	   OB.UI.widgetHTML($('#pod_assembler_message'));
       	   OB.Sidebar.mediaSearch(); // reload our sidebar media search - maybe it needs updating.
       	   $('#pod_details').html($('#showparts'));
