@@ -173,6 +173,8 @@ OBModules.Programs.getTrack = function(id,title)
 	// build an array of input files
         $fileq.push(this.innerHTML);
        }); 
+      $("body").css("cursor", "wait");
+      $('#pod_assembler_message').obWidget('warning',['Program Manager','Podcast Assembly in Progress']);
     OB.API.post('programs','build_podcast',{'filename':$fileq},function(status){
        pod_time = parseFloat(status.data.pod[0]);
        if(!status.status || !pod_time > 0) 
@@ -228,6 +230,7 @@ OBModules.Programs.getTrack = function(id,title)
       	   OB.Sidebar.mediaSearch(); // reload our sidebar media search - maybe it needs updating.
       	   $('#pod_details').html($('#showparts'));
            $('#build_file').hide();
+	   $("body").css("cursor", "default");
       	   $('#pod_assembler_message').obWidget('success',['Program Manager','Podcast Created']);
            $('#podcast_exit_button').text('Close');
 
