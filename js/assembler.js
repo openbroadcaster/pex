@@ -130,39 +130,39 @@ OBModules.Programs.getTrack = function(id,title)
 {
    OB.API.post('media','get',{'id':id},function(results){
     $media = results.data;
-
-   	OB.API.post('programs','getx',{'id': id},function(meta){
-    	if($media.type=='audio')
+   	if($media.type=='audio')
     	{
-//	$('#pod-comments').append('<div class="padl">'+$media['file_location'][1]+'</div>');
-//         if($media.comments!='') $('#pod-comments').append('<div class="padl">'+$media.comments+'</div>'); 
-//  
   	$media_location ='/'+$media['file_location'][0]+'/'+$media['file_location'][1]+'/';
     	$media_file = $media_location+$media['filename'];
 //just using page to stash values, should go straight into array
 	$('#filequeue').append('<li>'+$media_file+'</li>');
         $('#showparts').append('<li>'+title+'</li>'); 
+   	OB.API.post('programs','getx',{'id': id},function(meta){
+ 
+//	$('#pod-comments').append('<div class="padl">'+$media['file_location'][1]+'</div>');
+//         if($media.comments!='') $('#pod-comments').append('<div class="padl">'+$media.comments+'</div>'); 
+//  
 
          if(meta.data)
          {
-          tracks = meta.data.tracklist;
+//         tracks = meta.data.tracklist;
           credits = meta.data.credits;
-         if(tracks !='') $('#showparts').append('<div class="padl">Tracks: <ul style="display:inline-block;">'+ tracks + '</ul></div><br />');
-//
-//        if(credits !='')
-//	{
-//          $('#pod-comments').append('<div class="padl">Credits:');
-//          for(var k in credits)
-//           {
-//            $('#pod-comments').append('<ul>'+credits[k].role+':'+credits[k].name+'</ul>');
-//           }
-//	   $('#pod-comments').append('</div>');
-//         }
+//         if(tracks !='') $('#showparts').append('<div class="padl">Tracks: <ul style="display:inline-block;">'+ tracks + '</ul></div><br />');
+
+        if(credits !='')
+	{
+          $('#pod-comments').append('<div class="padl">Credits:');
+          for(var k in credits)
+           {
+            $('#pod-comments').append('<ul>'+credits[k].role+':'+credits[k].name+'</ul>');
+           }
+	   $('#pod-comments').append('</div>');
+         }
 	}
 
+     });
       OB.UI.widgetHTML($('#pod_details'));
-       }
-  });
+    }
 });
 }
 
