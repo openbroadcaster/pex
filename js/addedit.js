@@ -534,7 +534,7 @@ OBModules.Programs.programSave = function(program_id)
 
     if(!program_id) program_id = 'main'; // we want to manipulate the main message for new programs.
 
-    $('#program_'+program_id+'_message').obWidget((data.status==true ? 'success' : 'error'), data.msg);
+    $('#program_edit_message').obWidget((data.status==true ? 'success' : 'error'), data.msg[1]).show();
 
     if(program_id == 'main' && data.status == true)
     {

@@ -181,7 +181,7 @@ class Programs extends OBFController
     if(empty($duration)) return array(false, ['Program Edit','Duration Not Valid']);
     $data['duration']=$duration;
     $this->ProgramsModel('save',$data,$id);
-    return array(true,['Programs Manager','Saved Message', $id]);
+    return array(true,['Programs Manager','Saved Program', $id]);
   }
 
   public function editx()
