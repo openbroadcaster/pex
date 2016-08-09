@@ -1,18 +1,14 @@
 ---
 layout: default
-title: "Jekyll Docs Template"
+title: "Program Manager"
 ---
 
-### Get Started
+## PEX - Program Manager Module 
 
-Start by [creating a new post](http://jekyllrb.com/docs/posts/) one of the categories listed in `_config.yml`. It will appear in the navigation on the left once recompiled. Or use the supplied script to make creating pages easier:
+PEX is a media management module for [OpenBroadcaster](openbroadcaster.pro). This module extends the media model to provide:
 
-```bash
-ruby bin/jekyll-page "Some Page Title" ref
-```
+ - media [metadata](#metadata), including production credits, content licensing, copyright, CanCon and parental advisory labels
+ - Program Manager to assemble [episodes](#episodes) and assign images to the program [gallery](#gallery)
+ - scheduling of [Programs](#programs) as a [Series](#series)
 
-#### Don't Forget
-
-- Add your own content to this page (i.e. `index.md`) and change the `title`
-- Change `title` and `subtitle` defined in `config.yml` for your site
-- Set the `baseurl` in `_config.yml` for your repo if deploying to GitHub pages
+The Program Manager can be used to produce episodes from playlists, including assembly of tracklists from a dynamic playlist, as a single media file or podcast. Program episodes can be scheduled as a series of shows.
