@@ -36,39 +36,39 @@ Installation will:
 
 1. Insert default values for __Role__ and __Theme__ into the database
 
-_Roles_
+   _Roles_
 
- - host
- - producer
- - label
- - guest
- - sponsor
- - station
- - executive producer
- - composer
+   - host
+   - producer
+   - label
+   - guest
+   - sponsor
+   - station
+   - executive producer
+   - composer
 
-_Theme_
+   _Theme_
 
- - Strange Noises
- - Education
- - Arts, Culture, and Entertainment
- - Crime, Law and Justice
- - Economy, Business and Finance
- - Food
- - Health
- - Human Interest
- - Lifestyle and Leisure
- - Politics
- - Religion and Belief
- - Science and Technology
- - Society
- - Sport
- - Weather
- - Indigenous First Peoples
- - Conflicts, War and Peace
- - Disaster and Accident
- - Environment
- - Music
+   - Strange Noises
+   - Education
+   - Arts, Culture, and Entertainment
+   - Crime, Law and Justice
+   - Economy, Business and Finance
+   - Food
+   - Health
+   - Human Interest
+   - Lifestyle and Leisure
+   - Politics
+   - Religion and Belief
+   - Science and Technology
+   - Society
+   - Sport
+   - Weather
+   - Indigenous First Peoples
+   - Conflicts, War and Peace
+   - Disaster and Accident
+   - Environment
+   - Music
 
 
 ## Uninstalling the Module
