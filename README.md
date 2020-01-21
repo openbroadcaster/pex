@@ -12,7 +12,3 @@ Additional features planned or in development:
 * watchlist for monitoring Program updates (favourites)
 
 ![alt tag](https://github.com/openbroadcaster/PEX/blob/master/PEX.png)
-
-Jeff Hamm
-@geoplanet
-
