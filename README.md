@@ -1,5 +1,8 @@
 # PEX
-## OpenBroadcaster Program Manager Module
+
+PEX module is EOL. Most of the functionality in this module, including API support, is now included in the core observer code with the metadata manager to add different types of custom fields. Admin>Media Settings>Custom Metadata.
+
+## OpenBroadcaster Program Exchange Module
 **PEX** manages, schedules and distributes media as a collection (e.g. weekly program, serial episodes, festival)
 
 **PEX** features include:
